@@ -1,0 +1,61 @@
+@CHARSET "ISO-8859-1";
+
+/* table styles */
+table, th, td {
+	border: 1px solid black;
+	empty-cells:show;
+/* 	padding: 2px; */
+}
+
+th {
+	text-align: center;
+}
+
+/* #char_name {
+	font-style: italic;
+	text-align: center;
+} */
+
+#table_main td:FIRST-CHILD {
+	font-style: italic;
+	text-align: center;
+}
+
+#table_main tr:NTH-OF-TYPE(even) {
+	background: #f4d442;
+}
+
+#table_main tr:NTH-OF-TYPE(odd) {
+	background: #f4a641;
+}
+
+/**********/
+
+/* list styles */
+ul { 
+	list-style-type: none;
+} 
+/**********/
+
+/* div styles */
+div.outer-content {
+/* 	position: absolute; */
+	left: 0px;
+	width: 75%;
+	background: #f2a4eb;
+	margin-top: 20px;
+	padding-top: 10px;
+	padding-bottom: 10px;
+}
+
+div.inner-content {
+	width: 75%;
+	background: #a3c9f1;
+	margin: auto;
+	padding: 0px;
+}
+
+fieldset {
+	border: 1px groove;
+	margin: 5px;
+}
