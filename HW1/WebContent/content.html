@@ -6,60 +6,71 @@
 <link rel="stylesheet" href="style.css" type="text/css">
 </head>
 <body>
-	<section id="table_section">
+	<section>
 		<table>
 			<caption>Star Wars planets and characters that visited
 				them.</caption>
-			<tr>
-				<th></th>
-				<th>Kashyyyk</th>
-				<th>Coruscant</th>
-				<th>Yavin</th>
-				<th>Alderaan</th>
-				<th>Tatooine</th>
-			</tr>
+			<thead>
+				<tr>
+					<td></td>
+					<td>Kashyyyk</td>
+					<td>Coruscant</td>
+					<td>Yavin</td>
+					<td>Alderaan</td>
+					<td>Tatooine</td>
+				</tr>
+			</thead>
 			<tbody id="table_main">
-			<tr>
-<!-- 				<td id="char_name">Han Solo</td> -->
-				<td>Han Solo</td>
-				<td>no</td>
-				<td>yes</td>
-				<td>yes</td>
-				<td>no</td>
-				<td>yes</td>
-			</tr>
-			<tr>
-				<td>Princess Leia</td>
-				<td>no</td>
-				<td>yes</td>
-				<td>yes</td>
-				<td>yes</td>
-				<td>yes</td>
-			</tr>
-			<tr>
-				<td>Luke Skywalker</td>
-				<td>no</td>
-				<td>yes</td>
-				<td>yes</td>
-				<td>no</td>
-				<td>yes</td>
-			</tr>
-			<tr>
-				<td>Darth Vader</td>
-				<td>no</td>
-				<td>yes</td>
-				<td>yes</td>
-				<td>no</td>
-				<td>yes</td>
-			</tr>
+				<tr>
+					<td>Han Solo</td>
+					<td>no</td>
+					<td>yes</td>
+					<td>yes</td>
+					<td>no</td>
+					<td>yes</td>
+				</tr>
+				<tr>
+					<td>Princess Leia</td>
+					<td>no</td>
+					<td>yes</td>
+					<td>yes</td>
+					<td>yes</td>
+					<td>yes</td>
+				</tr>
+				<tr>
+					<td>Luke Skywalker</td>
+					<td>no</td>
+					<td>yes</td>
+					<td>yes</td>
+					<td>no</td>
+					<td>yes</td>
+				</tr>
+				<tr>
+					<td>Darth Vader</td>
+					<td>no</td>
+					<td>yes</td>
+					<td>yes</td>
+					<td>no</td>
+					<td>yes</td>
+				</tr>
+				<tr>
+					<td>Yoda</td>
+					<td>yes</td>
+					<td>yes</td>
+					<td>no</td>
+					<td>no</td>
+					<td>no</td>
+				</tr>
 			</tbody>
-			<tr>
-				<td colspan="2">Footer 1</td>
-				<td colspan="4">Footer 2</td>
-			</tr>
+			<tfoot>
+				<tr>
+					<td colspan="2">Footer 1</td>
+					<td colspan="4">Footer 2</td>
+				</tr>
+			</tfoot>
 		</table>
 	</section>
-	
+
 	<section id=list_section>
 		<ul>
 			<li>Soda Pop Brands
@@ -70,14 +81,14 @@
 					<li>Dr. Pepper</li>
 				</ul>
 			</li>
-			<li>Types of Pizza 
+			<li>Types of Pizza
 				<ul>
 					<li>Pepperoni</li>
 					<li>Hawaiian</li>
 					<li>Meat-lovers</li>
 				</ul>
 			</li>
-			<li>Types of Cheese 
+			<li>Types of Cheese
 				<ul>
 					<li>feta</li>
 					<li>Camembert</li>
@@ -91,58 +102,55 @@
 	</section>
 	<section id="div_section">
 		<div class="outer-content">
-			<div class="inner-content">
-				Whoohoo! Inner content for the divs!
+			<div class="inner-content">Whoohoo! Inner content for the divs!
 			</div>
 		</div>
 	</section>
 	<section class="forms">
-		<form action="http://classes.engr.oregonstate.edu/eecs/winter2015/cs290-400/tools/class-content/form_tests/check_request.php" method="get">
+		<form
+			action="http://classes.engr.oregonstate.edu/eecs/winter2015/cs290-400/tools/class-content/form_tests/check_request.php"
+			method="get">
 			<fieldset>
-			<legend>Some Get Data</legend>
-			<fieldset>
-			Text Input:<br>
-			<input type="text" name="text_input"><br>
-			</fieldset>
-			<fieldset>
-			Numeric Input:<br>
-			<input type="number" name="numerical_input"><br>
-			</fieldset>
-			<fieldset>
-			Password Input:<br>
-			<input type="password" name="password_input"><br>
-			</fieldset>
-			<fieldset>
-			Select Candy Type:<br>
-			<input type="radio" name="candy" value="Snickers">Snickers<br>
-			<input type="radio" name="candy" value="Skittles">Skittles<br>
-			<input type="radio" name="candy" value="Mentos">Mentos<br>
-			</fieldset>
-			<input type="submit" value="Submit">
+				<legend>Some GET Data</legend>
+				<fieldset>
+					Text Input: <input type="text" name="text_input"><br>
+				</fieldset>
+				<fieldset>
+					Numeric Input: <input type="number" name="numerical_input"><br>
+				</fieldset>
+				<fieldset>
+					Password Input: <input type="password" name="password_input"><br>
+				</fieldset>
+				<fieldset>
+					Select Candy Type:<br> <input type="radio" name="candy"
+						value="Snickers">Snickers<br> <input type="radio"
+						name="candy" value="Skittles">Skittles<br> <input
+						type="radio" name="candy" value="Mentos">Mentos<br>
+				</fieldset>
+				<input type="submit" value="Submit">
 			</fieldset>
 		</form>
-				<form action="http://classes.engr.oregonstate.edu/eecs/winter2015/cs290-400/tools/class-content/form_tests/check_request.php" method="post">
+		<form
+			action="http://classes.engr.oregonstate.edu/eecs/winter2015/cs290-400/tools/class-content/form_tests/check_request.php"
+			method="post">
 			<fieldset>
-			<legend>Some Post Data</legend>
-			<fieldset>
-			Text Input:<br>
-			<input type="text" name="text_input"><br>
-			</fieldset>
-			<fieldset>
-			Numeric Input:<br>
-			<input type="number" name="numerical_input"><br>
-			</fieldset>
-			<fieldset>
-			Password Input:<br>
-			<input type="password" name="password_input"><br>
-			</fieldset>
-			<fieldset>
-			Select Candy Type:<br>
-			<input type="radio" name="candy" value="Snickers">Snickers<br>
-			<input type="radio" name="candy" value="Skittles">Skittles<br>
-			<input type="radio" name="candy" value="Mentos">Mentos<br>
-			</fieldset>
-			<input type="submit" value="Submit">
+				<legend>Some POST Data</legend>
+				<fieldset>
+					Text Input: <input type="text" name="text_input"><br>
+				</fieldset>
+				<fieldset>
+					Numeric Input: <input type="number" name="numerical_input"><br>
+				</fieldset>
+				<fieldset>
+					Password Input: <input type="password" name="password_input"><br>
+				</fieldset>
+				<fieldset>
+					Select Candy Type:<br> <input type="radio" name="candy"
+						value="Snickers">Snickers<br> <input type="radio"
+						name="candy" value="Skittles">Skittles<br> <input
+						type="radio" name="candy" value="Mentos">Mentos<br>
+				</fieldset>
+				<input type="submit" value="Submit">
 			</fieldset>
 		</form>
 	</section>

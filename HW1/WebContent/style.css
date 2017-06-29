@@ -1,20 +1,18 @@
 @CHARSET "ISO-8859-1";
 
 /* table styles */
-table, th, td {
+table, td {
 	border: 1px solid black;
 	empty-cells:show;
-/* 	padding: 2px; */
 }
 
-th {
+thead {
+	display: table-header-group;
+	vertical-align: middle;
+	border-color: inherit;
 	text-align: center;
+	padding: 5px;
 }
-
-/* #char_name {
-	font-style: italic;
-	text-align: center;
-} */
 
 #table_main td:FIRST-CHILD {
 	font-style: italic;
@@ -51,6 +49,7 @@ div.outer-content {
 div.inner-content {
 	width: 75%;
 	background: #a3c9f1;
+	text-align: center;
 	margin: auto;
 	padding: 0px;
 }
