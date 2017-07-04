@@ -1,7 +1,7 @@
 @CHARSET "ISO-8859-1";
 
 /* table styles */
-table, td {
+table, td, th {
 	border: 1px solid black;
 	empty-cells:show;
 }
@@ -14,16 +14,17 @@ thead {
 	padding: 5px;
 }
 
-#table_main td:FIRST-CHILD {
+tbody.character_body th {
 	font-style: italic;
+	font-weight: normal;
 	text-align: center;
 }
 
-#table_main tr:NTH-OF-TYPE(even) {
+tbody.character_body tr:NTH-OF-TYPE(even) {
 	background: #f4d442;
 }
 
-#table_main tr:NTH-OF-TYPE(odd) {
+tbody.character_body tr:NTH-OF-TYPE(odd) {
 	background: #f4a641;
 }
 
