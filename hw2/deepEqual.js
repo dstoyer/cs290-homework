@@ -23,7 +23,7 @@ function deepEqual(obj1, obj2) {
 
 			if (!(key in obj2)) {
 				 return false;
-			 }
+			}
 
 			// if the key is an object, call deepEqual() again.
 			if (typeof obj1[key] == "object") {
@@ -70,15 +70,18 @@ console.log("console.log(deepEqual(null, null))");
 console.log(deepEqual(null, null));
 //→ true
 
-
 console.log("console.log(deepEqual(obj2,{here: {is: \"an\"}, object: 2}))");
 console.log(deepEqual(obj2,{here: {is: "an"}, object: 2}));
 // → false
 
 console.log("console.log(deepEqual(obj2, null))");
 console.log(deepEqual(obj2, null));
-//→ true
+//→ false
 
 console.log("console.log(deepEqual(null, obj2))");
 console.log(deepEqual(null, obj2));
-//→ true
+//→ false
+
+console.log("console.log(deepEqual(obj, obj2))");
+console.log(deepEqual(obj, obj2));
+// → false
