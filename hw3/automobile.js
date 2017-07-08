@@ -99,55 +99,38 @@ function makeComparator(auto1, auto2){
 	return auto1.make.toLowerCase().localeCompare(auto2.make.toLowerCase()) <= 0 ? true : false;
 }
 
+function getTypeValue(type) {
+	var val = 0;
+
+	switch (type) {
+		case 'roadster':
+			val = 4;
+			break;
+		case 'pickup':
+			val = 3;
+			break;
+		case 'suv':
+			val = 2;
+			break;
+		case 'wagon':
+			val = 1;
+			break;
+		default:
+			val = 0;
+	}
+	
+	return val;
+}
+
 /* This compares two automobiles based on their type. The ordering from "greatest" to "least" is as follows: roadster, pickup, suv, wagon, (types not otherwise listed). 
  * It is case insensitive. If two cars are of equal type then the newest one by model year should be considered "greater".*/
 function typeComparator(auto1, auto2){
     /* your code here*/
-	var types = {
-		'roadster': 4,
-		'pickup': 3,
-		'suv': 2,
-		'wagon': 1,
-		'other': 0
-	};
-	var type1 = auto1.type.toLowerCase();
-	var type2 = auto2.type.toLowerCase();
-	var val1 = 0;
-	var val2 = 0;
-	switch (type1) {
-		case 'roadster':
-			val1 = types.roadster;
-			break;
-		case 'pickup':
-			val1 = types.pickup;
-			break;
-		case 'suv':
-			val1 = types.suv;
-			break;
-		case 'wagon':
-			val1 = types.wagon;
-			break;
-		default:
-			val1 = types.other;
-	}
-	
-	switch (type2) {
-	case 'roadster':
-		val2 = types.roadster;
-		break;
-	case 'pickup':
-		val2 = types.pickup;
-		break;
-	case 'suv':
-		val2 = types.suv;
-		break;
-	case 'wagon':
-		val2 = types.wagon;
-		break;
-	default:
-		val2 = types.other;
-	}
-	
+
+	var val1 = getTypeValue(auto1.type.toLowerCase());
+	var val2 = getTypeValue(auto2.type.toLowerCase());
+
+	// We want to compare years if the vehicle type is the same.
 	if (val1 === val2) {
 		return yearComparator(auto1, auto2);
 	}
