@@ -95,7 +95,8 @@ function yearComparator(auto1, auto2){
 /*This compares two automobiles based on their make. It is case insensitive and makes which are alphabetically earlier in the alphabet are "greater" than ones that come later.*/
 function makeComparator(auto1, auto2){
     /* your code here*/
-	return auto1.make.toLowerCase() <= auto2.make.toLowerCase() ? true : false;
+	// If auto1 is greater than auto2, then -1 is returned, less-than returns 1 and equal-to returns 0
+	return auto1.make.toLowerCase().localeCompare(auto2.make.toLowerCase()) <= 0 ? true : false;
 }
 
 /* This compares two automobiles based on their type. The ordering from "greatest" to "least" is as follows: roadster, pickup, suv, wagon, (types not otherwise listed). 
