@@ -38,13 +38,7 @@ var automobiles = [
  */
 function sortArr( comparator, array ){
     /*your code here*/
-	
-	var showType = false;
-	
-	if (comparator.name === "typeComparator") {
-		showType = true;
-	}
-	
+
 	function mergeSort(arr)
 	{
 	    if (arr.length < 2)
@@ -190,8 +184,8 @@ function printAutomobiles(comparator, array) {
 	
 	array = sortArr(comparator, array);
 	
-	for (var auto in array) {
-		console.log("("+array[auto].logMe(show)+")");
+	for (var i in array) {
+		console.log("("+array[i].logMe(show)+")");
 	}
 }
 
@@ -204,7 +198,7 @@ printAutomobiles(typeComparator, automobiles);
 console.log("*****");
 /*Your program should output the following to the console.log, including the opening and closing 5 stars. All values in parenthesis should be replaced with appropriate values. Each line is a seperate call to console.log.
 
-Each line representing a car should be produced via a logMe function. This function should be added to the Automobile class and accept a single boolean argument. If the argument is 'true' then it prints "year make model type" with the year, make, model and type being the values appropriate for the automobile. If the argument is 'false' then the type is ommited and just the "year make model" is logged.
+Each line representing a car should be produced via a logMe function. This function should be added to the Automobile class and accept a single boolean argument. If the argument is 'true' then it prints "year make model type" with the year, make, model and type being the values appropriate for the automobile. If the argument is 'false' then the type is omitted and just the "year make model" is logged.
 
 *****
 The cars sorted by year are:
