@@ -9,9 +9,10 @@ function buildList(list) {
     for (var i = 0; i < list.length; i++) {
         result.push( function(idx) {
     		return function(){
-    			console.log('item[' + list[idx] + '] ' + list[idx]);
+//    			console.log('item[' + list[idx] + '] ' + list[idx]);
+    			alert('item[' + list[idx] + '] ' + list[idx]);
 			}; 
-        }(i));
+        }(i)); // The last part (i) calls the function immediately.
     }
     return result;
 }
