@@ -15,9 +15,9 @@ function Automobile( year, make, model, type ){
     this.logMe = function(showType) {
     	var string = "";
     	if (showType) {
-    		string += this.year + " " + this.make + " " + this.model + " " + this.type;
+    		console.log("("+this.year + " " + this.make + " " + this.model + " " + this.type+")");
     	} else {
-    		string += this.year + " " + this.make + " " + this.model;
+    		console.log("("+this.year + " " + this.make + " " + this.model+")");
     	}
     	return string;
     }
@@ -169,7 +169,7 @@ function printAutomobiles(comparator, array) {
 	array = sortArr(comparator, array);
 	
 	for (var i in array) {
-		console.log("("+array[i].logMe(show)+")");
+		array[i].logMe(show);
 	}
 }
 
