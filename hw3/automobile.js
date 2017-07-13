@@ -13,13 +13,11 @@ function Automobile( year, make, model, type ){
     this.model = model; //string (ex. Accord, Focus)
     this.type = type; //string (ex. Pickup, SUV)
     this.logMe = function(showType) {
-    	var string = "";
     	if (showType) {
     		console.log("("+this.year + " " + this.make + " " + this.model + " " + this.type+")");
     	} else {
     		console.log("("+this.year + " " + this.make + " " + this.model+")");
     	}
-    	return string;
     }
 }
 
@@ -38,7 +36,8 @@ var automobiles = [
  */
 function sortArr( comparator, array ){
     /*your code here*/
-
+	// copy the original array so that we don't alter it.
+	var newArray = array.slice(0);
 	function mergeSort(arr)
 	{
 	    if (arr.length < 2)
@@ -47,7 +46,8 @@ function sortArr( comparator, array ){
 	    var middle = parseInt(arr.length / 2);
 	    var left   = arr.slice(0, middle);
 	    var right  = arr.slice(middle, arr.length);
-	 
+	    // by returning the merge function while calling mergeSort() recursively, we divide the array into
+	    // smaller and smaller left and right arrays.
 	    return merge(mergeSort(left), mergeSort(right));
 	}
 	 
@@ -55,6 +55,7 @@ function sortArr( comparator, array ){
 	{
 	    var result = [];
 	 
+	    // we want to continue to compare items while both arrays have elements
 	    while (left.length && right.length) {
 	        if (comparator(left[0], right[0])) {
 	            result.push(left.shift());
@@ -63,16 +64,18 @@ function sortArr( comparator, array ){
 	        }
 	    }
 	 
+	    // copy any remaining elements into the new array, note that only left or right will have any elements left, not both.
 	    while (left.length)
 	        result.push(left.shift());
 	 
 	    while (right.length)
 	        result.push(right.shift());
 	 
+	    // returns the new, sorted array
 	    return result;
 	}
 	 
-	return mergeSort(array);
+	return mergeSort(newArray);
 }
 
 /*A comparator takes two arguments and uses some algorithm to compare them. If the first argument is larger or greater than the 2nd it returns true, otherwise it returns false. Here is an example that works on integers*/

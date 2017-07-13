@@ -28,10 +28,15 @@ function buildList(list) {
     for (var i = 0; i < list.length; i++) {
         result.push( function(idx) {
     		return function(){
-    			var item = 'item[' + list[idx] + '] ';
-    			console.log(item + list[idx]);
+    			var item = 'item' + list[idx] + ' ';
+    			// check to see if this is run in a browser or not.
+    			if (typeof window === 'undefined') { 
+    				console.log(item + list[idx]);
+    			} else {
+    				alert(item + list[idx]);
+    			}
 			}; 
-        }(i)); // The last part (i) calls the function immediately.
+        }(i)); // The last part (i) calls function(idx) immediately.
     }
     return result;
 }
