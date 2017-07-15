@@ -45,7 +45,7 @@ function testList() {
     var fnlist = buildList(['Tom','Dick','Harry']);
     // using j only to help prevent confusion - could use i
     for (var j = 0; j < fnlist.length; j++) {
-        fnlist[j]();
+        fnlist[j](); // this calls the function expression with the correct values
     }
 }
 

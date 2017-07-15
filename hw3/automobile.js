@@ -98,8 +98,10 @@ function yearComparator(auto1, auto2){
 /*This compares two automobiles based on their make. It is case insensitive and makes which are alphabetically earlier in the alphabet are "greater" than ones that come later.*/
 function makeComparator(auto1, auto2){
     /* your code here*/
-	// If auto1 is greater than auto2, then -1 is returned, less-than returns 1 and equal-to returns 0
-	return auto1.make.toLowerCase().localeCompare(auto2.make.toLowerCase()) <= 0 ? true : false;
+	// If auto1 comes before auto2 in the alphabet, then a negative value is returned.
+	// localeCompare() is case-insensitive by default.
+	// reference: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String/localeCompare
+	return auto1.make.localeCompare(auto2.make) <= 0 ? true : false;
 }
 
 function getTypeValue(type) {
@@ -126,7 +128,7 @@ function getTypeValue(type) {
 }
 
 /* This compares two automobiles based on their type. The ordering from "greatest" to "least" is as follows: roadster, pickup, suv, wagon, (types not otherwise listed). 
- * It is case insensitive. If two cars are of equal type then the newest one by model year should be considered "greater".*/
+ * It is case insensitive. If two cars are of equal type then the newest one by model year is considered "greater".*/
 function typeComparator(auto1, auto2){
     /* your code here*/
 
