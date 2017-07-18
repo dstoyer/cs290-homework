@@ -35,16 +35,16 @@ var interactiveTable = document.createElement("TABLE");
 interactiveTable.setAttribute("id", "interactive");
 document.body.appendChild(interactiveTable);
 
+// change these values to make the table bigger or smaller.
+var rowSize = 5;
+var colSize = 5;
 // nested for loops to create rows and cells of table elements
-
-var tableSize = 5;
-
-for(var i = 0; i < tableSize; i++) {
+for(var i = 0; i < rowSize; i++) {
 	var tRow = document.createElement("TR");
 	tRow.setAttribute("id", "row"+i);
 	interactiveTable.appendChild(tRow);
   // we start at 1 to simplify presentation
-	for (var j = 1; j < tableSize; j++) {
+	for (var j = 1; j < colSize; j++) {
 		var cellType = "";
 		var cellText = "";
 		if (i === 0) {
@@ -80,9 +80,10 @@ buttonTable.style.textAlign = "center";
 document.body.appendChild(buttonTable);
 
 // Need 3 rows and 3 cols
-buttonTable.appendChild(createBtnTableRow([{id: "upButton",idx: 1, text: "Up"}], tableSize));
-buttonTable.appendChild(createBtnTableRow([{id: "leftButton",idx: 0, text: "Left"},{id: "rightButton",idx: 2, text: "right"}], tableSize));
-buttonTable.appendChild(createBtnTableRow([{id: "downButton",idx: 1, text: "Down"}], tableSize));
+var btnTableSize = 5;
+buttonTable.appendChild(createBtnTableRow([{id: "upButton",idx: 1, text: "Up"}], btnTableSize));
+buttonTable.appendChild(createBtnTableRow([{id: "leftButton",idx: 0, text: "Left"},{id: "rightButton",idx: 2, text: "right"}], btnTableSize));
+buttonTable.appendChild(createBtnTableRow([{id: "downButton",idx: 1, text: "Down"}], btnTableSize));
 
 /**
  * btnObjects should contain button properties with idx values increasing in value, left to right. 
@@ -178,8 +179,8 @@ downButton.setAttribute("onclick", "navigateTable(\"downButton\")");
  */
 function navigateTable(buttonID) {
 
-	var size = tableSize - 1;
-
+	var rSize = rowSize - 1;
+	var cSize = colSize -1;
 	switch (document.getElementById(buttonID).id) {
 		case "leftButton":
 			if (colIdx > 1) {
@@ -190,7 +191,7 @@ function navigateTable(buttonID) {
 			updateTableSelection(rowIdx, colIdx);
 			break;
 		case "rightButton":
-			if (colIdx < size) {
+			if (colIdx < cSize) {
 				colIdx++;
 			} else {
 				return;
@@ -206,7 +207,7 @@ function navigateTable(buttonID) {
 			updateTableSelection(rowIdx, colIdx);
 			break;
 		case "downButton":
-			if (rowIdx < size) {
+			if (rowIdx < rSize) {
 				rowIdx++;
 			} else {
 				return;
