@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="ISO-8859-1">
+<title>Activity: Ajax Interactions</title>
+<script type="text/javascript" src="getWeatherMapInfo.js"></script>
+</head>
+<body>
+
+<h1>Activity: Ajax Interactions</h1>
+<section id="OpenWeatherMap">
+	<form>
+		<fieldset>
+			<legend>Get OpenWeatherMap Data</legend>
+			<fieldset>
+				Enter City: <input type="text" name="cityName"><br>
+			</fieldset>
+			OR<br>
+			<fieldset>
+				Enter Zip Code: <input type="number" name="zipCode"><br>
+			</fieldset>
+			<input type="button" name="weatherSubmit" value="Submit Query" onClick="getWeatherResult(this.form)">
+		</fieldset>
+	</form>
+</section>
+
+<div id="weatherDiv">
+	<H2>Open Weather Map Data</H2><br>
+
+	<p id="weatherResult"></p>
+</div>
+
+<section id="submitJSON">
+	<form>
+		<fieldset>
+			<legend>Submit JSON Data</legend>
+			Click the button to submit a JSON object.<br>
+			<input type="submit" value="Submit JSON" id="jsonSubmit">
+		</fieldset>
+	</form>
+</section>
+<div>
+	<H2>Submitted JSON Data</H2><br>
+	<span id="jsonResult"></span>
+</div>
+</body>
+</html>
