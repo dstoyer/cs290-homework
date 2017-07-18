@@ -4,30 +4,32 @@
  * Date: Jul 16, 2017
  *
  * Creates an interactive 4x4 table.
+ * When the page is loaded the upper left, non-header cell of the table should be 'selected'. 
+ * This is denoted by it having a thicker border than the other cells. If you push the directional 
+ * buttons other cells should be selected instead. So if you press the right button, cell 1,1 
+ * should no longer be selected and 2,1 should be selected instead.
+ * If you are already on the top row and hit 'up' nothing should happen (you should not be able to
+ * move into the header cells). Likewise if you are all the way right and hit right or all the way at the bottom and hit down.
+ * Hitting the "Mark Cell" button should permanently change the background of the selected cell to yellow. This should persist even after other cells are selected or marked.
  */
 var displayText = "<H1>HW Assignment: DOM and Events</H1>";
 
 document.body.innerHTML = displayText;
 
-var introText = document.createTextNode(
-		"When the page is loaded the upper left, non-header cell of the table should be 'selected'." +
-		" This is denoted by it having a thicker border than the other cells. If you push the directional" +
-		" buttons other cells should be selected instead. So if you press the right button, cell 1,1 should " +
-		"no longer be selected and 2,1 should be selected instead. If you are already on the top row and hit " +
-		"'up' nothing should happen (you should not be able to move into the header cells). Likewise if you are " +
-		"all the way right and hit right or all the way at the bottom and hit down. Hitting the \"Mark Cell\" " +
-		"button should permanently change the background of the selected cell to yellow. This should persist even" +
-		" after other cells are selected or marked."
-		);
+var introText = 
+		"A selected cell is denoted by it having a blue border thicker than the other cells.</br>" +
+		"Click the directional buttons to select other cells.</br>" +
+		"If you press the right button, cell 1,1 should no longer be selected and 2,1 should be selected instead.</br>" +
+		"If you are already on the top row and hit 'up' nothing should happen (you should not be able to move into the header cells). </br>" +
+		"Likewise, if you are all the way right and hit right or all the way at the bottom and hit down. </br>" +
+		"Hitting the \"Mark Cell\" button should permanently change the background of the selected cell to yellow.</br>" +
+		"This should persist even after other cells are selected or marked.";
 var addTextDiv = document.createElement("div");
 addTextDiv.setAttribute("id", "body_div");
 document.body.appendChild(addTextDiv);
 
-//var body_div = document.getElementById("body_div");
-//body_div.appendChild(introText);
-//body_div.style.color = "blue";
-addTextDiv.appendChild(introText);
-addTextDiv.style.color = "blue";
+addTextDiv.innerHTML = introText;
+addTextDiv.style.color = "brown";
 // Start table
 var interactiveTable = document.createElement("TABLE");
 interactiveTable.setAttribute("id", "interactive");
@@ -55,8 +57,7 @@ for(var i = 0; i < tableSize; i++) {
 		var cell = document.createElement(cellType);
 		cell.setAttribute("id", "cell"+ i + j);
 		cell.appendChild(document.createTextNode(cellText));
-		cell.style.textAlign = "center";
-		tRow.appendChild(cell)
+		tRow.appendChild(cell);
 	}
 }
 
@@ -79,8 +80,6 @@ buttonTable.style.textAlign = "center";
 document.body.appendChild(buttonTable);
 
 // Need 3 rows and 3 cols
-
-
 buttonTable.appendChild(createBtnTableRow([{id: "upButton",idx: 1, text: "Up"}], tableSize));
 buttonTable.appendChild(createBtnTableRow([{id: "leftButton",idx: 0, text: "Left"},{id: "rightButton",idx: 2, text: "right"}], tableSize));
 buttonTable.appendChild(createBtnTableRow([{id: "downButton",idx: 1, text: "Down"}], tableSize));
@@ -104,7 +103,7 @@ function createBtnTableRow(btnObjects, rowSize) {
 		cell.setAttribute("class", buttonClass);
 		cell.style.border = "0px";
 		
-		// Check for a button until we have checked them all
+		// Check for a button until we have created them all
 		if (btnIdx < buttonTotal) {
 			// if this is the cell we want the button in, create a new button and append it.
 			if (i === btnObjects[btnIdx].idx) {
@@ -219,13 +218,13 @@ function navigateTable(buttonID) {
 	}
 
   // function to update the location and cell border
-  function updateTableSelection(r, c) {
+	function updateTableSelection(r, c) {
 
-	selectedCell.style.border = unselect;
-	selectedCell.style.borderColor = "black";
-	selectedCell = document.getElementById("cell"+r+c);
-	selectedCell.style.border = selected;
-	selectedCell.style.borderColor = "blue";
+		selectedCell.style.border = unselect;
+		selectedCell.style.borderColor = "black";
+		selectedCell = document.getElementById("cell"+r+c);
+		selectedCell.style.border = selected;
+		selectedCell.style.borderColor = "blue";
 
-  }
+	}
 }
