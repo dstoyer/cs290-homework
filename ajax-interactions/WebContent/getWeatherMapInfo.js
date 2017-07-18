@@ -17,6 +17,11 @@ function getWeatherResult(form) {
 		return;
 	}
 	
+	if ("" === cityName && "" === zipCode) {
+		alert("You must enter one of city name or zip code!");
+		return;
+	}
+	
 	if (cityName) {
 		query += "q="+cityName;
 	} else {

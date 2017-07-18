@@ -4,6 +4,8 @@
 <meta charset="ISO-8859-1">
 <title>Activity: Ajax Interactions</title>
 <script type="text/javascript" src="getWeatherMapInfo.js"></script>
+<script type="text/javascript" src="postJSONinfo.js"></script>
+
 </head>
 <body>
 
@@ -35,13 +37,13 @@
 		<fieldset>
 			<legend>Submit JSON Data</legend>
 			Click the button to submit a JSON object.<br>
-			<input type="submit" value="Submit JSON" id="jsonSubmit">
+			<input type="submit" value="Submit JSON" onClick="getJsonObject()">
 		</fieldset>
 	</form>
 </section>
-<div>
+<div id="jsonDiv">
 	<H2>Submitted JSON Data</H2><br>
-	<span id="jsonResult"></span>
+	<p id="jsonResult"></p>
 </div>
 </body>
 </html>
