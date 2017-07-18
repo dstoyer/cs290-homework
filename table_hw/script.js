@@ -35,30 +35,37 @@ document.body.appendChild(interactiveTable);
 
 // nested for loops to create rows and cells of table elements
 
-for(var i = 1; i < 5; i++) {
-	var tRow = document.createElement("TR");
-	tRow.setAttribute("id", "i");
-	interactiveTable.appendChild(tRow);
+var tableSize = 5;
 
-	for (var j = 1; j < 5; j++) {
+for(var i = 0; i < tableSize; i++) {
+	var tRow = document.createElement("TR");
+	tRow.setAttribute("id", "row"+i);
+	interactiveTable.appendChild(tRow);
+  // we start at 1 to simplify presentation
+	for (var j = 1; j < tableSize; j++) {
 		var cellType = "";
 		var cellText = "";
-		if (i === 1) {
+		if (i === 0) {
 			cellType += "TH";
 			cellText += "Header "+j;
 		} else {
 			cellType += "TD";
-			cellText += "" +j +" , "+ (i-1);
+			cellText += "" +j +" , "+ (i);
 		}
 		var cell = document.createElement(cellType);
-		cell.setAttribute("id", ""+ i + j);
+		cell.setAttribute("id", "cell"+ i + j);
 		cell.appendChild(document.createTextNode(cellText));
 		cell.style.textAlign = "center";
 		tRow.appendChild(cell)
 	}
 }
 
-// Navigation button section
+// proof of concept, getting the cell ID and changing the style.
+// This works.
+// document.getElementById("cell22").style.border = "3px solid black";
+
+
+/* ****** Navigation button section ******/
 var buttonDiv = document.createElement("div");
 buttonDiv.setAttribute("id", "buttonDiv");
 document.body.appendChild(buttonDiv);
@@ -72,75 +79,153 @@ buttonTable.style.textAlign = "center";
 document.body.appendChild(buttonTable);
 
 // Need 3 rows and 3 cols
-var topRow = document.createElement("TR");
-topRow.setAttribute("class", buttonClass);
-// first cell
-topRow.appendChild(document.createElement("TD"));
-// up arrow cell
-var upCell = document.createElement("TD");
-upCell.setAttribute("id", "upCell");
-upCell.setAttribute("class", buttonClass);
-// up arrow button
-var upButton = document.createElement("button");
-upButton.setAttribute("id", "upButton");
-upButton.appendChild(document.createTextNode("Up"));
-upCell.appendChild(upButton);
-topRow.appendChild(upCell);
-//// last cell of row 1
-topRow.appendChild(document.createElement("TD"));
-buttonTable.appendChild(topRow);
 
 
-var middleRow = document.createElement("TR");
-middleRow.setAttribute("class", buttonClass);
-// left arrow cell
-var leftCell = document.createElement("TD");
-leftCell.setAttribute("id", "leftCell");
-leftCell.setAttribute("class", buttonClass);
-leftCell.style.border = "0px";
-// left arrow button
-var leftButton = document.createElement("button");
-leftButton.setAttribute("id", "leftButton");
-leftButton.appendChild(document.createTextNode("Left"));
-leftCell.appendChild(leftButton);
-middleRow.appendChild(leftCell);
-// middle cell
-middleRow.appendChild(document.createElement("TD"));
-//left arrow cell
-var rightCell = document.createElement("TD");
-rightCell.setAttribute("id", "rightCell");
-rightCell.setAttribute("class", buttonClass);
-rightCell.style.border = "0px solid white";
-// right arrow button
-var rightButton = document.createElement("button");
-rightButton.setAttribute("id", "rightButton");
-rightButton.appendChild(document.createTextNode("Right"));
-rightCell.appendChild(rightButton);
-middleRow.appendChild(rightCell);
+buttonTable.appendChild(createBtnTableRow([{id: "upButton",idx: 1, text: "Up"}], tableSize));
+buttonTable.appendChild(createBtnTableRow([{id: "leftButton",idx: 0, text: "Left"},{id: "rightButton",idx: 2, text: "right"}], tableSize));
+buttonTable.appendChild(createBtnTableRow([{id: "downButton",idx: 1, text: "Down"}], tableSize));
 
-buttonTable.appendChild(middleRow);
+/**
+ * btnObjects should contain button properties with idx values increasing in value, left to right. 
+ * idx should correspond with the table cell desired to contain the button.
+ * @param btnObjects = [{id: "button1", idx: 0, text: "Left"}, {id: "button2", idx: 2, text: "Right"}]
+ * @param rowSize = number of cells in the row
+ * @returns
+ */
+function createBtnTableRow(btnObjects, rowSize) {
+	var row = document.createElement("tr");
+	row.setAttribute("class", buttonClass);
+	
+	var buttonTotal = btnObjects.length;
+	var btnIdx = 0;
+	
+	for (var i = 0; i < rowSize; i++) {
+		var cell = document.createElement("td");
+		cell.setAttribute("class", buttonClass);
+		cell.style.border = "0px";
+		
+		// Check for a button until we have checked them all
+		if (btnIdx < buttonTotal) {
+			// if this is the cell we want the button in, create a new button and append it.
+			if (i === btnObjects[btnIdx].idx) {
+				// add button
+				var button = document.createElement("button");
+				button.setAttribute("id", btnObjects[btnIdx].id);
+				button.appendChild(document.createTextNode(btnObjects[btnIdx].text));
+				cell.appendChild(button);
+				// go to next button object
+				btnIdx++;
+			}
+		} 
+		
+		row.appendChild(cell);
+		
+	}
+	return row;
+}
 
-var bottomRow = document.createElement("TR");
-bottomRow.setAttribute("class", buttonClass);
-// first cell
-bottomRow.appendChild(document.createElement("TD"));
-// down arrow cell
-var downCell = document.createElement("TD");
-downCell.setAttribute("id", "downCell");
-downCell.setAttribute("class", buttonClass);
-downCell.style.border = "0px solid white";
-// down arrow button
-var downButton = document.createElement("button");
-downButton.setAttribute("id", "downButton");
-downButton.appendChild(document.createTextNode("Down"));
-downCell.appendChild(downButton);
-bottomRow.appendChild(downCell);
-//// last cell of row 1
-bottomRow.appendChild(document.createElement("TD"));
-buttonTable.appendChild(bottomRow);
+/* **************************/
+// table selection
 
 
-// top-center is "up" arrow
-// middle-left is "left" arrow
-// middle-right is "right" arrow
-// bottom-center is "down" arrow
+var selectDiv = document.createElement("div");
+selectDiv.setAttribute("id", "selectDiv");
+document.body.appendChild(selectDiv);
+
+selectDiv.appendChild(document.createTextNode("Use the button below to mark a cell of the table."));
+
+
+//Set initial values for navigating the table starting at 1.
+var rowIdx = 1;
+var colIdx = 1;
+
+//cell border values for selection
+var selected = "2px solid black";
+var unselect = "1px solid black";
+// The currently selected cell
+var selectedCell = document.getElementById("cell"+rowIdx+colIdx);
+// set it to be "selected";
+selectedCell.style.border = selected;
+selectedCell.style.borderColor = "blue";
+
+/* **** selection button *****/
+var selectionBtn = document.createElement("button");
+selectionBtn.setAttribute("id","selectionBtn");
+selectionBtn.innerHTML = "Mark Cell";
+selectionBtn.setAttribute("onclick", "markCell()");
+
+function markCell() {
+	selectedCell.style.backgroundColor = "yellow";
+}
+
+document.body.appendChild(selectionBtn);
+
+// Set the onclick listeners
+leftButton.setAttribute("onclick", "navigateTable(\"leftButton\")");
+rightButton.setAttribute("onclick", "navigateTable(\"rightButton\")");
+upButton.setAttribute("onclick", "navigateTable(\"upButton\")");
+downButton.setAttribute("onclick", "navigateTable(\"downButton\")");
+
+
+
+/**
+ * Changes the table cell border attributes based on the cell ID.
+ * The cell IDs are by location within the table, so "cell11" is the upper-left-most cell and "cell44" is the lower-right-most cell.
+ * cell index numbers are checked against the boundaries (1 and tableSize - 1) to make sure we don't try to call an invalid cell ID.
+ *
+ * This functions acts on and changes global variables selectedCell, rowIdx, and colIdx
+ * @param buttonID
+ * @returns
+ */
+function navigateTable(buttonID) {
+
+	var size = tableSize - 1;
+
+	switch (document.getElementById(buttonID).id) {
+		case "leftButton":
+			if (colIdx > 1) {
+				colIdx--;
+			} else {
+				return;
+			}
+			updateTableSelection(rowIdx, colIdx);
+			break;
+		case "rightButton":
+			if (colIdx < size) {
+				colIdx++;
+			} else {
+				return;
+			}
+			updateTableSelection(rowIdx, colIdx);
+			break;
+		case "upButton":
+			if (rowIdx > 1) {
+				rowIdx--;
+			} else {
+				return;
+			}
+			updateTableSelection(rowIdx, colIdx);
+			break;
+		case "downButton":
+			if (rowIdx < size) {
+				rowIdx++;
+			} else {
+				return;
+			}
+			updateTableSelection(rowIdx, colIdx);
+			break;
+		default:
+			return
+	}
+
+  // function to update the location and cell border
+  function updateTableSelection(r, c) {
+
+	selectedCell.style.border = unselect;
+	selectedCell.style.borderColor = "black";
+	selectedCell = document.getElementById("cell"+r+c);
+	selectedCell.style.border = selected;
+	selectedCell.style.borderColor = "blue";
+
+  }
+}
