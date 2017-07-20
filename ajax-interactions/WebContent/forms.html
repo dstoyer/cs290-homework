@@ -13,8 +13,8 @@
 <section id="OpenWeatherMap">
 	<form>
 		<fieldset>
-			<legend>Get OpenWeatherMap Data</legend>
-			<fieldset>
+			<legend><H2>Get OpenWeatherMap Data</H2></legend>
+			
 				Enter City: <input type="text" name="cityName"><br>
 			</fieldset>
 			OR<br>
@@ -26,24 +26,32 @@
 	</form>
 </section>
 
-<div id="weatherDiv">
-	<H2>Open Weather Map Data Results</H2><br>
+<div>
+	<fieldset id="weatherData">
+	<legend><H2>Open Weather Map Data Results</H2></legend>
 
 	<p id="weatherResult"></p>
+	<br>
+	</fieldset>
 </div>
 
-<section id="submitJSON">
+<section id="submitString">
 	<form>
 		<fieldset>
-			<legend>Submit JSON Data</legend>
-			Click the button to submit a JSON object.<br>
-			<input type="submit" value="Submit JSON" onClick="getJsonObject()">
+			<legend><H2>Submit String Data</H2></legend>
+			<fieldset id = "stringFieldset">
+				Enter String Object: <input type="text" name="string" value="Hello World!" id="textInput"><br>
+			</fieldset>
+			Click the button to submit a string.<br>
+			<input type="submit" value="Submit String" onClick="getJsonObject(form)">
 		</fieldset>
 	</form>
 </section>
-<div id="jsonDiv">
-	<H2>JSON Data Results</H2><br>
+<div>
+	<fieldset id="jsonData">
+	<legend><H2>JSON Data Results</H2></legend>
 	<p id="jsonResult"></p>
+	</fieldset>
 </div>
 </body>
 </html>

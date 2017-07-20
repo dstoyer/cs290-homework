@@ -32,27 +32,59 @@ function getWeatherResult(form) {
 	
 	var url = "http://api.openweathermap.org/data/2.5/weather?"+query+",us"+"&units=imperial&APPID=aa224681db2a563756dd2041bc0eb5ca";
 	
-	req.open("GET", url);
+	req.open("GET", url, true);
 	req.addEventListener("load", function(){
+		var response;
 		if(req.status >=200 && req.status < 400) {
 			var response = JSON.parse(req.responseText);
 		}
-		
-		if (!response) {
-			response = "Did not get any weather data for " + cityName + " " + zipCode;
-		} 
 		// update the weather result data
-		var weatherResult = document.createElement("p");
-		weatherResult.appendChild(document.createTextNode(JSON.stringify(response)));
+		var weatherResult = createElement("p");
 		weatherResult.setAttribute("id", "weatherResult");
 		// remove any existing weather results
-		if (document.getElementById("weatherResult")) {
-			document.getElementById("weatherDiv").removeChild(document.getElementById("weatherResult"));
+		if (getElementById("weatherData")) {
+			getElementById("weatherData").removeChild(getElementById("weatherResult"));
 		}
-		document.getElementById("weatherDiv").appendChild(weatherResult);
+		if (!response) {
+			weatherResult.appendChild(createTextNode("Did not get any weather data for " + cityName + " " + zipCode));
+		} else {
+			weatherResult.appendChild(createTextNode("City Name: " + response.name));
+			weatherResult.appendChild(createElement("br"));
+			weatherResult.appendChild(createTextNode("Current Weather: " + response.weather[0].main+"/"+response.weather[0].description));
+			weatherResult.appendChild(createElement("br"));
+			weatherResult.appendChild(createTextNode("Current Temp: " + response.main.temp+"F"));
+			weatherResult.appendChild(createElement("br"));
+			weatherResult.appendChild(createTextNode("Minimum Temp: " + response.main.temp_min+"F"));
+			weatherResult.appendChild(createElement("br"));
+			weatherResult.appendChild(createTextNode("Maximum Temp: " + response.main.temp_max+"F"));
+			weatherResult.appendChild(createElement("br"));
+			weatherResult.appendChild(createTextNode("Wind Speed and Direction: " + response.wind.speed+"mph -- "+response.wind.deg+"deg"));
+			weatherResult.appendChild(createElement("br"));
+			weatherResult.appendChild(createTextNode("Longitude: " + response.coord.lon));
+			weatherResult.appendChild(createElement("br"));
+			weatherResult.appendChild(createTextNode("Latitude: " + response.coord.lat));
+			weatherResult.appendChild(createElement("br"));
+			weatherResult.appendChild(createElement("br"));
+			weatherResult.appendChild(createTextNode("Raw Data:"+JSON.stringify(response)));
+			weatherResult.appendChild(createElement("br"));
+			weatherResult.appendChild(createElement("br"));
+		}
+		getElementById("weatherData").appendChild(weatherResult);
 	});
 	
 	req.send(url);
 	event.preventDefault();
+	
+	function createElement(element) {
+		return document.createElement(element);
+	}
+	
+	function createTextNode(text) {
+		return document.createTextNode(text);
+	}
+	
+	function getElementById(id) {
+		return document.getElementById(id);
+	}
 
 }

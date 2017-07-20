@@ -12,18 +12,12 @@
  * move into the header cells). Likewise if you are all the way right and hit right or all the way at the bottom and hit down.
  * Hitting the "Mark Cell" button should permanently change the background of the selected cell to yellow. This should persist even after other cells are selected or marked.
  */
-var displayText = "<H1>HW Assignment: DOM and Events</H1>";
 
-document.body.innerHTML = displayText;
+var titleH1 = document.createElement("H1");
+titleH1.textContent = "HW Assignment: DOM and Events";
+document.body.appendChild(titleH1);
 
-var introText = 
-		"A selected cell is denoted by it having a blue border thicker than the other cells.</br>" +
-		"Click the directional buttons to select other cells.</br>" +
-		"If you press the right button, cell 1,1 should no longer be selected and 2,1 should be selected instead.</br>" +
-		"If you are already on the top row and hit 'up' nothing should happen (you should not be able to move into the header cells). </br>" +
-		"Likewise, if you are all the way right and hit right or all the way at the bottom and hit down. </br>" +
-		"Hitting the \"Mark Cell\" button should permanently change the background of the selected cell to yellow.</br>" +
-		"This should persist even after other cells are selected or marked.";
+var introText = "Select cells using the direction buttons, marked cells have a yellow background."
 var addTextDiv = document.createElement("div");
 addTextDiv.setAttribute("id", "body_div");
 document.body.appendChild(addTextDiv);
@@ -31,33 +25,57 @@ document.body.appendChild(addTextDiv);
 addTextDiv.innerHTML = introText;
 addTextDiv.style.color = "brown";
 // Start table
-var interactiveTable = document.createElement("TABLE");
-interactiveTable.setAttribute("id", "interactive");
-document.body.appendChild(interactiveTable);
+
+var tableDiv = document.createElement("div");
+tableDiv. setAttribute("id", "tableDiv");
+//tableDiv.appendChild(interactiveTable);
+document.body.appendChild(tableDiv);
 
 // change these values to make the table bigger or smaller.
-var rowSize = 5;
+var rowSize = 4;
 var colSize = 5;
-// nested for loops to create rows and cells of table elements
-for(var i = 0; i < rowSize; i++) {
-	var tRow = document.createElement("TR");
-	tRow.setAttribute("id", "row"+i);
-	interactiveTable.appendChild(tRow);
-  // we start at 1 to simplify presentation
-	for (var j = 1; j < colSize; j++) {
-		var cellType = "";
-		var cellText = "";
-		if (i === 0) {
-			cellType += "TH";
-			cellText += "Header "+j;
-		} else {
-			cellType += "TD";
-			cellText += "" +j +" , "+ (i);
+
+createTable(rowSize, colSize, false);
+
+function createTable(rSize, cSize, updateTable) {
+	
+	var interactiveTable = document.createElement("TABLE");
+	interactiveTable.setAttribute("id", "interactive");
+	
+	if (document.getElementById("interactive")) {
+		document.getElementById("tableDiv").removeChild(document.getElementById("interactive"));
+	}
+	
+	for(var i = 0; i < rSize; i++) {
+		var tRow = document.createElement("TR");
+		tRow.setAttribute("id", "row"+i);
+		interactiveTable.appendChild(tRow);
+	  // we start at 1 to simplify presentation
+		for (var j = 1; j < cSize; j++) {
+			var cellType = "";
+			var cellText = "";
+			if (i === 0) {
+				cellType += "TH";
+				cellText += "Header "+j;
+			} else {
+				cellType += "TD";
+				cellText += "" +j +" , "+ (i);
+			}
+			var cell = document.createElement(cellType);
+			cell.setAttribute("id", "cell"+ i + j);
+			cell.appendChild(document.createTextNode(cellText));
+			tRow.appendChild(cell);
 		}
-		var cell = document.createElement(cellType);
-		cell.setAttribute("id", "cell"+ i + j);
-		cell.appendChild(document.createTextNode(cellText));
-		tRow.appendChild(cell);
+	}
+	document.getElementById("tableDiv").appendChild(interactiveTable);
+	
+	if (updateTable) {
+		rowIdx = 1;
+		colIdx = 1;
+		selectedCell = document.getElementById("cell"+rowIdx+colIdx);
+		// set it to be "selected";
+		selectedCell.style.border = selected;
+		selectedCell.style.borderColor = "blue";
 	}
 }
 
@@ -80,7 +98,7 @@ buttonTable.style.textAlign = "center";
 document.body.appendChild(buttonTable);
 
 // Need 3 rows and 3 cols
-var btnTableSize = 5;
+var btnTableSize = 3;
 buttonTable.appendChild(createBtnTableRow([{id: "upButton",idx: 1, text: "Up"}], btnTableSize));
 buttonTable.appendChild(createBtnTableRow([{id: "leftButton",idx: 0, text: "Left"},{id: "rightButton",idx: 2, text: "right"}], btnTableSize));
 buttonTable.appendChild(createBtnTableRow([{id: "downButton",idx: 1, text: "Down"}], btnTableSize));
@@ -92,14 +110,14 @@ buttonTable.appendChild(createBtnTableRow([{id: "downButton",idx: 1, text: "Down
  * @param rowSize = number of cells in the row
  * @returns
  */
-function createBtnTableRow(btnObjects, rowSize) {
+function createBtnTableRow(btnObjects, rSize) {
 	var row = document.createElement("tr");
 	row.setAttribute("class", buttonClass);
 	
 	var buttonTotal = btnObjects.length;
 	var btnIdx = 0;
 	
-	for (var i = 0; i < rowSize; i++) {
+	for (var i = 0; i < rSize; i++) {
 		var cell = document.createElement("td");
 		cell.setAttribute("class", buttonClass);
 		cell.style.border = "0px";
@@ -161,10 +179,10 @@ function markCell() {
 document.body.appendChild(selectionBtn);
 
 // Set the onclick listeners
-leftButton.setAttribute("onclick", "navigateTable(\"leftButton\")");
-rightButton.setAttribute("onclick", "navigateTable(\"rightButton\")");
-upButton.setAttribute("onclick", "navigateTable(\"upButton\")");
-downButton.setAttribute("onclick", "navigateTable(\"downButton\")");
+leftButton.setAttribute("onclick", "navigateTable('leftButton')");
+rightButton.setAttribute("onclick", "navigateTable('rightButton')");
+upButton.setAttribute("onclick", "navigateTable('upButton')");
+downButton.setAttribute("onclick", "navigateTable('downButton')");
 
 
 
@@ -229,3 +247,56 @@ function navigateTable(buttonID) {
 
 	}
 }
+
+/*
+ * Create ability to change the table size
+ */
+
+document.body.appendChild(document.createElement("br"));
+document.body.appendChild(document.createElement("br"));
+
+var changeTableForm = document.createElement("form");
+document.body.appendChild(changeTableForm);
+
+var changeTableFS = document.createElement("fieldset");
+changeTableFS.setAttribute("id", "changeTableFS");
+changeTableFS.appendChild(document.createTextNode("Enter number of rows and columns and click \"Change Table\" to change the table size."))
+
+var changeTableFSLegend = document.createElement("legend");
+changeTableFSLegend.textContent = "Change Table Size";
+changeTableFS.appendChild(changeTableFSLegend);
+changeTableFS.appendChild(document.createElement("br"));
+
+
+changeTableFS.appendChild(document.createTextNode("Row Size: "));
+var tableRowInput = document.createElement("input");
+tableRowInput.setAttribute("type", "number");
+tableRowInput.setAttribute("name", "rowInput");
+changeTableFS.appendChild(tableRowInput);
+changeTableFS.appendChild(document.createElement("br"));
+
+changeTableFS.appendChild(document.createTextNode("Column Size: "));
+var tableColInput = document.createElement("input");
+tableColInput.setAttribute("type", "number");
+tableColInput.setAttribute("name", "colInput");
+changeTableFS.appendChild(tableColInput);
+changeTableFS.appendChild(document.createElement("br"));
+
+var changeTableBtn = document.createElement("button");
+changeTableBtn.appendChild(document.createTextNode("Change Table"));
+changeTableBtn.setAttribute("onClick", "tableFromForm(form)");
+changeTableFS.appendChild(changeTableBtn);
+changeTableForm.appendChild(changeTableFS);
+
+function tableFromForm(form) {
+	// need to add one to the total for the number of columns
+//	var colVal = parseInt(form.colInput.value) + 1;
+	rowSize = form.rowInput.value;
+	colSize = parseInt(form.colInput.value) + 1;
+	
+	// We need to be sure all of the DOM content is loaded, otherwise createTable(...) will fail.
+	document.addEventListener("DOMContentLoaded", createTable(rowSize, colSize, true));
+	event.preventDefault();
+}
+
+
