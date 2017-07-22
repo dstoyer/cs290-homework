@@ -37,10 +37,18 @@ var colSize = 5;
 
 createTable(rowSize, colSize, false);
 
+/**
+ * Set updateTable to true when using to change the table size from the page form.
+ * @param rSize
+ * @param cSize
+ * @param updateTable
+ * @returns
+ */
 function createTable(rSize, cSize, updateTable) {
 	
 	var interactiveTable = document.createElement("TABLE");
 	interactiveTable.setAttribute("id", "interactive");
+	interactiveTable.style.borderCollapse = "collapse";
 	
 	if (document.getElementById("interactive")) {
 		document.getElementById("tableDiv").removeChild(document.getElementById("interactive"));
@@ -63,6 +71,9 @@ function createTable(rSize, cSize, updateTable) {
 			}
 			var cell = document.createElement(cellType);
 			cell.setAttribute("id", "cell"+ i + j);
+			cell.style.border = "1px solid black";
+			cell.style.padding = "3px 8px";
+			cell.style.textAlign = "center";
 			cell.appendChild(document.createTextNode(cellText));
 			tRow.appendChild(cell);
 		}
@@ -290,7 +301,6 @@ changeTableForm.appendChild(changeTableFS);
 
 function tableFromForm(form) {
 	// need to add one to the total for the number of columns
-//	var colVal = parseInt(form.colInput.value) + 1;
 	rowSize = form.rowInput.value;
 	colSize = parseInt(form.colInput.value) + 1;
 	
@@ -298,5 +308,4 @@ function tableFromForm(form) {
 	document.addEventListener("DOMContentLoaded", createTable(rowSize, colSize, true));
 	event.preventDefault();
 }
-
 

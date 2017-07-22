@@ -1,10 +1,21 @@
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset="ISO-8859-1">
+<meta charset="UTF-8">
 <title>Activity: Ajax Interactions</title>
+<script type="text/javascript" src="utils.js"></script>
 <script type="text/javascript" src="getWeatherMapInfo.js"></script>
 <script type="text/javascript" src="postJSONinfo.js"></script>
+<script type="text/javascript">
+	document.addEventListener("DOMContentLoaded", getWeatherResult);
+	document.addEventListener("DOMContentLoaded", getJsonObject);
+</script>
+<style type="text/css">
+legend {
+	font-size: 1.5em;
+	font-weight: bold;
+}
+</style>
 
 </head>
 <body>
@@ -13,22 +24,22 @@
 <section id="OpenWeatherMap">
 	<form>
 		<fieldset>
-			<legend><H2>Get OpenWeatherMap Data</H2></legend>
-			
-				Enter City: <input type="text" name="cityName"><br>
+			<legend>Get OpenWeatherMap Data</legend>
+			<fieldset>
+				Enter City: <input type="text" id="cityName" value="Corvallis"><br>
 			</fieldset>
 			OR<br>
 			<fieldset>
-				Enter Zip Code: <input type="number" name="zipCode"><br>
+				Enter Zip Code: <input type="number" id="zipCode"><br>
 			</fieldset>
-			<input type="button" name="weatherSubmit" value="Submit Query" onClick="getWeatherResult(this.form)">
+			<input type="button" id="weatherSubmit" value="Submit Query">
 		</fieldset>
 	</form>
 </section>
 
 <div>
 	<fieldset id="weatherData">
-	<legend><H2>Open Weather Map Data Results</H2></legend>
+	<legend>Open Weather Map Data Results</legend>
 
 	<p id="weatherResult"></p>
 	<br>
@@ -38,18 +49,18 @@
 <section id="submitString">
 	<form>
 		<fieldset>
-			<legend><H2>Submit String Data</H2></legend>
+			<legend>Submit String Data</legend>
 			<fieldset id = "stringFieldset">
-				Enter String Object: <input type="text" name="string" value="Hello World!" id="textInput"><br>
+				Enter String Object: <input type="text" id="stringEntry" value="Hello World!" id="textInput"><br>
 			</fieldset>
 			Click the button to submit a string.<br>
-			<input type="submit" value="Submit String" onClick="getJsonObject(form)">
+			<input type="button" id="submitStringBtn" value="Submit String">
 		</fieldset>
 	</form>
 </section>
 <div>
 	<fieldset id="jsonData">
-	<legend><H2>JSON Data Results</H2></legend>
+	<legend>JSON Data Results</legend>
 	<p id="jsonResult"></p>
 	</fieldset>
 </div>
