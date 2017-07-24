@@ -17,12 +17,11 @@ var titleH1 = document.createElement("H1");
 titleH1.textContent = "HW Assignment: DOM and Events";
 document.body.appendChild(titleH1);
 
-var introText = "Select cells using the direction buttons, marked cells have a yellow background."
 var addTextDiv = document.createElement("div");
 addTextDiv.setAttribute("id", "body_div");
 document.body.appendChild(addTextDiv);
 
-addTextDiv.innerHTML = introText;
+addTextDiv.textContent = "Select cells using the direction buttons, marked cells have a yellow background.";
 addTextDiv.style.color = "brown";
 // Start table
 
@@ -118,7 +117,7 @@ buttonTable.appendChild(createBtnTableRow([{id: "downButton",idx: 1, text: "Down
  * btnObjects should contain button properties with idx values increasing in value, left to right. 
  * idx should correspond with the table cell desired to contain the button.
  * @param btnObjects = [{id: "button1", idx: 0, text: "Left"}, {id: "button2", idx: 2, text: "Right"}]
- * @param rowSize = number of cells in the row
+ * @param rSize = number of cells in the row
  * @returns
  */
 function createBtnTableRow(btnObjects, rSize) {
@@ -140,6 +139,8 @@ function createBtnTableRow(btnObjects, rSize) {
 				// add button
 				var button = document.createElement("button");
 				button.setAttribute("id", btnObjects[btnIdx].id);
+				// Set the onClick listeners
+				button.setAttribute("onClick", "navigateTable("+btnObjects[btnIdx].id+")");
 				button.appendChild(document.createTextNode(btnObjects[btnIdx].text));
 				cell.appendChild(button);
 				// go to next button object
@@ -190,12 +191,14 @@ function markCell() {
 document.body.appendChild(selectionBtn);
 
 // Set the onclick listeners
-leftButton.setAttribute("onclick", "navigateTable('leftButton')");
-rightButton.setAttribute("onclick", "navigateTable('rightButton')");
-upButton.setAttribute("onclick", "navigateTable('upButton')");
-downButton.setAttribute("onclick", "navigateTable('downButton')");
-
-
+//var leftButton = document.getElementById("leftButton");
+//leftButton.setAttribute("onclick", "navigateTable('leftButton')");
+//var rightButton = document.getElementById("rightButton");
+//rightButton.setAttribute("onclick", "navigateTable('rightButton')");
+//var upButton = document.getElementById("upButton");
+//upButton.setAttribute("onclick", "navigateTable('upButton')");
+//var downButton = document.getElementById("downButton");
+//downButton.setAttribute("onclick", "navigateTable('downButton')");
 
 /**
  * Changes the table cell border attributes based on the cell ID.
@@ -206,11 +209,11 @@ downButton.setAttribute("onclick", "navigateTable('downButton')");
  * @param buttonID
  * @returns
  */
-function navigateTable(buttonID) {
-
+function navigateTable(button) {
+	
 	var rSize = rowSize - 1;
 	var cSize = colSize -1;
-	switch (document.getElementById(buttonID).id) {
+	switch (button.id) {
 		case "leftButton":
 			if (colIdx > 1) {
 				colIdx--;
@@ -261,6 +264,8 @@ function navigateTable(buttonID) {
 
 /*
  * Create ability to change the table size
+ * 
+ * Does not work properly in Firefox (v54.0).
  */
 
 document.body.appendChild(document.createElement("br"));
@@ -295,7 +300,7 @@ changeTableFS.appendChild(document.createElement("br"));
 
 var changeTableBtn = document.createElement("button");
 changeTableBtn.appendChild(document.createTextNode("Change Table"));
-changeTableBtn.setAttribute("onClick", "tableFromForm(form)");
+changeTableBtn.setAttribute("onClick", "tableFromForm(this.form)");
 changeTableFS.appendChild(changeTableBtn);
 changeTableForm.appendChild(changeTableFS);
 

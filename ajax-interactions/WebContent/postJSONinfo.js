@@ -29,6 +29,7 @@ function getJsonObject(event) {
 			}
 			
 			if (!response) {
+				loadingJSONData.boolean = false;
 				response = "Did not get any JSON data for: " + string;
 			} 
 			// update the weather result data

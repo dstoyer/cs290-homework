@@ -25,36 +25,29 @@ var loadingWeatherData = {boolean: true};
 function getWeatherResult() {
 
 	getElementById("weatherSubmit").addEventListener('click', function(event) {
-		var cityName = getElementById("cityName").value;
-		var zipCode = getElementById("zipCode").value;
-		
+
 		var query = "";
-		
-		if (cityName && zipCode) {
-			alert("Only enter a city name OR a zipcode, not both!");
+		var weatherEntry = getElementById("weatherEntry").value;
+
+		if ("" === weatherEntry) {
+			alert("You must enter a city name or zip code!");
 			return;
 		}
 		
-		if ("" === cityName && "" === zipCode) {
-			alert("You must enter one of city name or zip code!");
-			return;
-		}
-		
-		if (cityName) {
-			query += "q="+cityName;
+		// checks if the submitted value is a number, if not, then use the city API.
+		if (isNaN(weatherEntry)) {
+			query += "q="+weatherEntry;
 		} else {
-			query += "zip="+zipCode;
+			query += "zip="+weatherEntry;
 		}
-		
-		var req = new XMLHttpRequest();
 		
 		var url = "http://api.openweathermap.org/data/2.5/weather?"+query+",us"+"&units=imperial&APPID=aa224681db2a563756dd2041bc0eb5ca";
-		
+		var req = new XMLHttpRequest();
 		req.open("GET", url, true);
 		req.addEventListener("load", function(){
 			var response;
 			if(req.status >=200 && req.status < 400) {
-				var response = JSON.parse(req.responseText);
+				response = JSON.parse(req.responseText);
 			}
 			// update the weather result data
 			var weatherResult = createElement("p");
@@ -65,6 +58,7 @@ function getWeatherResult() {
 			}
 			if (!response) {
 				weatherResult.appendChild(createTextNode("Did not get any weather data for " + cityName + " " + zipCode));
+				loadingWeatherData.boolean = false;
 			} else {
 				weatherResult.appendChild(createTextNode("City Name: " + response.name));
 				weatherResult.appendChild(createElement("br"));
