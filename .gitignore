@@ -4,3 +4,4 @@
 RemoteSystemsTempFiles
 *~
 *.swp
+node_modules
