@@ -1,0 +1,26 @@
+@CHARSET "ISO-8859-1";
+
+table, th, td {
+	border-collapse: collapse;
+	border-spacing: 0px;
+	border: 1px solid black;
+	padding: 3px 8px;
+	empty-cells:show;
+}
+
+thead {
+	display: table-header-group;
+	vertical-align: middle;
+	border-color: inherit;
+	text-align: center;
+	padding: 0px;
+}
+
+caption {
+	font-weight: bold; 
+	font-size: 20px;
+}
+
+#noDataCell {
+	text-align: center;
+}

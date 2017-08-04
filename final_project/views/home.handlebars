@@ -1,0 +1,25 @@
+<fieldset>
+<legend>Workout Submission</legend>
+<form method="get">
+  <input type="text" name="name" id="workoutName" value="Enter workout name">
+  <input type="button" id="workoutBtn" name="Submit" value="Submit Workout">
+</form>
+</fieldset>
+
+<fieldset>
+<table>
+<caption> Workouts</caption>
+	<thead>
+		<th>Name</th><th>Reps</th><th>Weight</th><th>Date</th><th>lbs</th>
+	</thead>
+	<tbody id="tableBody">
+		{{#unless tableRows}}
+		<tr><td id="noDataCell" colspan = "5">No Data</td></tr>
+		{{/unless}}
+	</tbody>
+</table>
+</fieldset>
+
+<form method="get">
+  <input type="button" id="resetTableBtn" name="resetTable" value="Reset Table">
+</form>

@@ -58,3 +58,20 @@ the body with views.
 		+ Simple strings can be sent via Handlebars within get() or post()
 		  functions by using res.send("some string here").
 
+## Build out database functionality
+
++ Must create table, if it doesn't exist.
++ Must query database on page load to see if there is existing data to display.
+
++ Create a button that resets a table in the database.
+	+ Client-side, ajax get request to reset table. Receive confirmation.
+	+ Server-side, app.get handler to reset table sends POST request to database
+	  to delete and re-create the table then sends confirmation to the client.
++ Create a simple submit button that sends data to a database.
+
+## Naming conventions
++ Names for getting info from database.
+	+ table rows are exercises
+	+ should the functions be named by desired data, or actions taken (e.g.
+	  getExercise vs. dbRequest)?
+
