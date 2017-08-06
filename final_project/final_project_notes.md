@@ -63,15 +63,41 @@ the body with views.
 + Must create table, if it doesn't exist.
 + Must query database on page load to see if there is existing data to display.
 
-+ Create a button that resets a table in the database.
-	+ Client-side, ajax get request to reset table. Receive confirmation.
-	+ Server-side, app.get handler to reset table sends POST request to database
-	  to delete and re-create the table then sends confirmation to the client.
-+ Create a simple submit button that sends data to a database.
++ [DONE] Create a button that resets a table in the database.
+	+ [DONE] Client-side, ajax get request to reset table. Receive confirmation.
+	+ [DONE] Server-side, app.get handler to reset table sends POST request to database to delete and re-create the table then sends confirmation to the client.
++ [DONE]Create a simple submit button that sends data to a database.
+
++ [DONE] Create delete button that removes a workout from the db.
+
++ Create update button on Edit page that changes workout data in db.
+	+ takes user back to main page.
+	+ client-side: use form submit to update and take user back to main page
+	+ server-side: create app.post function to handle update request.
+
++ Create cancel button on Edit page that takes user back to main page with no changes to db.
+	+ [DONE] client-side: use form POST submit to take the user back to main page.
+	+ [DONE] server-side: create POST handler for loading main page.
+
 
 ## Naming conventions
 + Names for getting info from database.
-	+ table rows are exercises
+	+ table rows are workouts
 	+ should the functions be named by desired data, or actions taken (e.g.
 	  getExercise vs. dbRequest)?
 
+
+## Still to do:
+
++ Create Fields for workout details.
+	+ connect input to db.
+	+ sanity check input.
+	+ possibly use table to format field alignment.
+
++ Create form to edit workout.
+	+ fill form with existing workout data.
+	+ Create update functionality to db.
+	+ Ability to cancel.
+		+ takes user back to main page without changing data.
+
++ Possibly use same form (function?) code for both new and edit workouts.

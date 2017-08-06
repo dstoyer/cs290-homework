@@ -8,6 +8,10 @@ table, th, td {
 	empty-cells:show;
 }
 
+td {
+	white-space: nowrap;
+}
+
 thead {
 	display: table-header-group;
 	vertical-align: middle;
@@ -23,4 +27,56 @@ caption {
 
 #noDataCell {
 	text-align: center;
+}
+
+/* styles for formatting forms */
+
+input:focus, textarea:focus {
+  /* To give a little highlight on active elements */
+  border-color: #000;
+}
+
+.entryFieldset {
+	width: 550px;
+}
+
+
+legend {
+	font-size: 20px;
+}
+
+label.entryLabel {
+	display: inline-block;
+	text-align: right;
+	width: 130px;
+	font-weight: bold;
+	margin-right: 3px;
+}
+
+/*******************************/
+
+.button, .unitsDiv {
+  /* To position the buttons to the same position of the text fields. */
+  padding-left: 90px; /* same size as the label elements */
+  margin-bottom: 10px;
+}
+
+button {
+  /* This extra margin represent roughly the same space as the space
+     between the labels and their text fields */
+  margin-left: .5em;
+}
+
+form.left {
+	float: left;
+}
+
+#editBtn, #delBtn {
+	width: 60px;
+	margin-left: 1px;
+	margin-right:1px;
+}
+
+#editBtn {
+	float:left;
 }

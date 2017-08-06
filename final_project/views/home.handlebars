@@ -1,21 +1,73 @@
-<fieldset>
-<legend>Workout Submission</legend>
-<form method="get">
-  <input type="text" name="name" id="workoutName" value="Enter workout name">
-  <input type="button" id="workoutBtn" name="Submit" value="Submit Workout">
-</form>
-</fieldset>
 
-<fieldset>
+<script type="text/javascript">
+	document.addEventListener("DOMContentLoaded", postWorkout);
+	document.addEventListener("DOMContentLoaded", resetTable);
+</script>
+
+<form action="/" class="editForm" method="GET">
+	<fieldset class="entryFieldset">
+		<legend>Workout Submission</legend>
+		<p>Required fields are followed by <strong><abbr title="required">*</abbr></strong>.</p>
+		
+		<p>
+			<label class="entryLabel" for="name"><span>Workout Name:<strong><abbr title="required">*</abbr></strong></span></label>
+			<input class="inputBox" id="workoutName" type="text" name="name" value="New Workout" onkeydown="if(event.keyCode == 13) return false;">
+		</p>
+		<p>
+			<label class="entryLabel" for="reps"><span>Reps:</span></label>
+			<input class="inputBox" id="workoutReps" type="number" name="reps" value="0">
+		</p>
+		<p>
+			<label class="entryLabel" for="Weight"><span>Weight:</span></label>
+			<input class="inputBox" id="workoutWeight" type="number" name="weight" value="0">
+		</p>
+		<p>
+			<label class="entryLabel" for="date"><span>Date:</span></label>
+			<input class="inputBox" id="workoutDate" type="date" name="date">
+		</p>
+	
+		<label class="entryLabel" for="unitsDiv">Units:</label>
+		<div class="unitsDiv">
+		<input type="radio" name="units" id="lbs" value="1">
+		<label for="lbs">lbs</label><br>
+		<input type="radio" name="units" id="kg" value="0">
+		<label for="kg">kg</label>
+		</div>
+		<div class="button">
+		<input type="button" id="workoutBtn" name="Submit" value="Submit Workout">
+		</div>
+	</fieldset>
+</form>
+
+<fieldset class="entryFieldset">
+<legend>Submitted Workouts</legend>
 <table>
 <caption> Workouts</caption>
 	<thead>
-		<th>Name</th><th>Reps</th><th>Weight</th><th>Date</th><th>lbs</th>
+		<th>Name</th><th>Reps</th><th>Weight</th><th>Date</th><th>units</th>
 	</thead>
 	<tbody id="tableBody">
 		{{#unless tableRows}}
-		<tr><td id="noDataCell" colspan = "5">No Data</td></tr>
+			<tr id="noDataRow"><td colspan = "5">No Workouts Submitted</td></tr>
+		{{else}}
+			{{#each tableRows}}
+				<tr id="{{this.id}}">
+					<td>{{this.name}}</td>
+					<td>{{#if this.reps}}{{this.reps}}{{/if}}</td>
+					<td>{{#if this.weight}}{{this.weight}}{{/if}}</td>
+					<td>{{#if this.date}}{{this.date}}{{/if}}</td>
+					<td>{{#if this.units}}{{this.units}}{{/if}}</td>
+					<td style="width: 125px;">
+						<form class="left" action="/editWorkout" method="POST">
+						<input type="hidden" name="id" value="{{this.id}}">
+						<input id="editBtn" type="submit" value="Edit">
+						</form>
+						<Button id="delBtn" type="button" onclick="deleteWorkout({{this.id}})">Delete</Button>
+					</td>
+				</tr>
+			{{/each}}
 		{{/unless}}
+		
 	</tbody>
 </table>
 </fieldset>
