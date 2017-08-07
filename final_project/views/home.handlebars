@@ -56,12 +56,12 @@
 		{{else}}
 			{{#each tableRows}}
 				<tr id="{{this.id}}">
-					<td>{{this.name}}</td>
+					<td class="nameCell">{{this.name}}</td>
 					<td>{{this.reps}}</td>
 					<td>{{this.weight}}</td>
 					<td>{{formatDate this.date}}</td>
 					<td>{{getUnitHelper this.units}}</td>
-					<td style="width: 125px;">
+					<td class="editCell">
 						<form class="left" action="/editWorkout" method="POST">
 						<input type="hidden" name="id" value="{{this.id}}">
 						<input id="editBtn" type="submit" value="Edit">
