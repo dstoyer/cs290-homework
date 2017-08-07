@@ -37,7 +37,8 @@ input:focus, textarea:focus {
 }
 
 fieldset {
-	float:left;
+	/* float:left; */
+	display:inline-block;
 }
 
 .entryFieldset {
