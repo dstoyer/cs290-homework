@@ -6,15 +6,15 @@
 	<input type="hidden" name="id" value="{{workout.id}}">
 	<p>
 		<label class="entryLabel" for="name"><span>Workout Name:<strong><abbr title="required">*</abbr></strong></span></label>
-		<input class="inputBox" id="editworkoutName" type="text" name="name" maxlength="255" value="{{workout.name}}" onkeyup="inputValidation(false)" onkeydown="if(event.keyCode == 13) return false;">
+		<input class="inputBox" id="editName" type="text" onClick="this.select()" name="name" maxlength="255" value="{{workout.name}}" onkeyup="inputValidation(false)" onkeydown="if(event.keyCode == 13) return false;">
 	</p>
 	<p>
 		<label class="entryLabel" for="reps"><span>Reps:</span></label>
-		<input class="inputBox" type="number" name="reps" min="0" value="{{workout.reps}}">
+		<input class="inputBox" id="editReps" type="number" onClick="this.select()" onkeyup="inputValidation(false)" name="reps" min="0" value="{{workout.reps}}">
 	</p>
 	<p>
 		<label class="entryLabel" for="Weight"><span>Weight:</span></label>
-		<input class="inputBox" type="number" name="weight" min="0" value="{{workout.weight}}">
+		<input class="inputBox" id="editWeight" type="number" onClick="this.select()" onkeyup="inputValidation(false)" name="weight" min="0" value="{{workout.weight}}">
 	</p>
 	<p>
 		<label class="entryLabel" for="date"><span>Date:</span></label>
