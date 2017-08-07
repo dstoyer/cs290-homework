@@ -246,6 +246,6 @@ expressApp.use(function(err, req, res, next){
 });
 
 expressApp.listen(expressApp.get('port'), function(){
-	console.log('Express started on http://localhost:' + expressApp.get('port') + '; press Ctrl-C to terminate.');
+	console.log('Express started on http://flip3.engr.oregonstate.edu:' + expressApp.get('port') + '; press Ctrl-C to terminate.');
 });
 
