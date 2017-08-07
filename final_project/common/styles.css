@@ -36,6 +36,11 @@ input:focus, textarea:focus {
   border-color: #000;
 }
 
+fieldset {
+	/* float:left; */
+	display:inline-block;
+}
+
 .entryFieldset {
 	width: 550px;
 }
@@ -45,7 +50,7 @@ legend {
 	font-size: 20px;
 }
 
-label.entryLabel {
+label.entryLabel{
 	display: inline-block;
 	text-align: right;
 	width: 130px;
