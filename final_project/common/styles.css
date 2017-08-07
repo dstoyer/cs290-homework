@@ -8,8 +8,21 @@ table, th, td {
 	empty-cells:show;
 }
 
+
+
 td {
 	white-space: nowrap;
+	overflow: hidden;
+}
+
+.nameCell {
+	width: 160px;
+	max-width: 160px;
+}
+
+.editCell {
+	width: 125px;
+	min-width: 125px;
 }
 
 thead {
