@@ -51,16 +51,21 @@ function postWorkout() {
 					if ("id" !== data) {
 						var td = document.createElement("td");
 						var tdContent = "";
+
 						if ("date" === data) {
 							// we only want the year-month-day, not the time and time zone offset.
 							tdContent += rowJSON[data].slice(0,10);
-						} else if (data === "units"){
+						} else if ("units" === data){
 							if (rowJSON[data]) {
 								tdContent += "lbs";
 							} else {
 								tdContent += "kg";
 							}
 						} else {
+							if ("name" === data) {
+								td.setAttribute("class", "nameCell");
+								td.setAttribute("title", rowJSON[data]);
+							}
 							tdContent += rowJSON[data];
 						}
 						td.appendChild(document.createTextNode(tdContent));
@@ -92,6 +97,7 @@ function postWorkout() {
 
 				
 				var btnTd = document.createElement("td");
+				btnTd.setAttribute("class", "editCell");
 				btnTd.appendChild(editForm);
 				btnTd.appendChild(document.createTextNode(" "));
 				btnTd.appendChild(delBtn);
