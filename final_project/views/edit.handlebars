@@ -1,21 +1,36 @@
 <p>Welcome to the edit page!</p>
 
+The date retrieved is: {{workout.date}}.
 
-<form action="/" class="editForm" method="POST">
+<form action="/" class="editForm" method="POST" onsubmit="return inputValidation(true)">
 	<fieldset class="entryFieldset"><legend>Edit Workout: {{workout.name}}</legend>
 	<p>Required fields are followed by <strong><abbr title="required">*</abbr></strong>.</p>
 	<input type="hidden" name="id" value="{{workout.id}}">
-	<p><label class="entryLabel" for="name"><span>Workout Name:<strong><abbr title="required">*</abbr></strong></span></label><input class="inputBox" type="text" name="name" value="{{workout.name}}"></p>
-	<p><label class="entryLabel" for="reps"><span>Reps:</span></label><input class="inputBox" type="number" name="reps" value="{{workout.reps}}"></p>
-	<p><label class="entryLabel" for="Weight"><span>Weight:</span></label><input class="inputBox" type="number" name="weight" value="{{workout.weight}}"></p>
-	<p><label class="entryLabel" for="date"><span>Date:</span></label><input class="inputBox" type="date" name="date" value="{{workout.date}}"></p>
+	<p>
+		<label class="entryLabel" for="name"><span>Workout Name:<strong><abbr title="required">*</abbr></strong></span></label>
+		<input class="inputBox" id="editworkoutName" type="text" name="name" maxlength="255" value="{{workout.name}}" onkeyup="inputValidation(false)" onkeydown="if(event.keyCode == 13) return false;">
+	</p>
+	<p>
+		<label class="entryLabel" for="reps"><span>Reps:</span></label>
+		<input class="inputBox" type="number" name="reps" min="0" value="{{workout.reps}}">
+	</p>
+	<p>
+		<label class="entryLabel" for="Weight"><span>Weight:</span></label>
+		<input class="inputBox" type="number" name="weight" min="0" value="{{workout.weight}}">
+	</p>
+	<p>
+		<label class="entryLabel" for="date"><span>Date:</span></label>
+		<input class="inputBox" type="date" name="date" value="{{workout.date}}">
+	</p>
 
-	<label class="entryLabel" for="unitsDiv">Units: </label>
 	<div class="unitsDiv">
+	<label class="entryLabel" for="unitsField">Units: </label>
+	<fieldset>
 	<input type="radio" name="units" id="lbs" value="1" {{#if workout.units}}checked{{/if}}>
 	<label for="lbs">lbs</label><br>
 	<input type="radio" name="units" id="kg" value="0" {{#unless workout.units}}checked{{/unless}}>
 	<label for="kg">kg</label>
+	</fieldset>
 	</div>
 	<div class="button">
 	<input type="submit" name="updateWorkout" value="Update Workout">
@@ -23,7 +38,7 @@
 	</fieldset>
 </form>
 
-<form class="editForm" action="/" method="POST">
+<form style="float:left" class="editForm" action="/" method="POST">
 	Canceling goes back to the main page without making any changes.<br>
 	<input type="submit" value="Cancel Edit">
 </form>

@@ -27,7 +27,16 @@ var mysql = require('./dbcon.js');
 
 var expressApp = expressFunc();
 
-var handleBars = require('express-handlebars').create({defaultLayout:'main'});
+var handleBars = require('express-handlebars').create({
+														defaultLayout:'main',
+														helpers: {'getUnitHelper': (bool) => {
+															if (bool){
+																return "lbs";
+															} else {
+																return "kg";
+															}
+														}}
+													});
 
 expressApp.engine('handlebars', handleBars.engine);
 // expressApp.set('view.engine', 'handlebars') allows us to omit the ".handlebars" extention from the render(...) function calls
@@ -56,6 +65,10 @@ expressApp.post('/', function(req,res) {
 	
 	if(req.body['updateWorkout']){
 		console.log('Server: main updateWorkout updating '+req.body.name);
+		  if(req.body.date == "") {
+				 var today = new Date();
+				 req.body.date = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate();
+		  }
 		mysql.pool.query("UPDATE workouts SET name=?, reps=?, weight=?, date=?, units=? WHERE id=? ",
 			[req.body.name, req.body.reps, req.body.weight, req.body.date, req.body.units, req.body.id],
 			function(err, result){
@@ -130,12 +143,18 @@ expressApp.get('/resetTable',function(req,res,next){
 expressApp.post('/insertWorkout', function(req, res) {
 	  
 	  console.log('req.body: ' + JSON.stringify(req.body));
-	  console.log('req.query: ' + JSON.stringify(req.query));
-	  
+	  if (req.body.name.length > 255) {
+		  req.body.name = req.body.name.slice(0,255);
+	  }
+	  if(req.body.date == "") {
+			 var today = new Date();
+			 req.body.date = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate();
+	  }	  
 	  console.log('Server: insert workout from client: '+JSON.stringify(req.body)+'')
 //	  mysql.pool.query("INSERT INTO workouts (`name`) VALUES (?)", [req.body.name, req.body.reps, req.body.weight, req.body.date, req.body.units], function(err, result){
 //	  var date = dateFormat(new Date(), "DD-MM-YYYY");
 //	  console.log(date);
+
 	  mysql.pool.query("INSERT INTO workouts (name, reps, weight, date, units) VALUES (?,?,?,?,?)", [req.body.name, req.body.reps, req.body.weight, req.body.date, req.body.units], function(err, result){
 	    if(err){
 	    	console.log(err);
