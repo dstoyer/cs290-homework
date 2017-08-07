@@ -33,7 +33,7 @@ expressApp.engine('handlebars', handleBars.engine);
 // expressApp.set('view.engine', 'handlebars') allows us to omit the ".handlebars" extention from the render(...) function calls
 // e.g. res.render('home.handlebars') --> res.render('home')
 expressApp.set('view engine', 'handlebars'); 
-expressApp.set('port', 3500);
+expressApp.set('port', 8281);
 
 var session = require('express-session');
 var bodyParser = require('body-parser');
