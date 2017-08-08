@@ -1,6 +1,6 @@
 <p>Welcome to the edit page!</p>
 
-<form action="/" class="editForm" method="POST" onsubmit="inputValidation(true); return false">
+<form action="/" class="editForm" method="POST" onsubmit="return inputValidation(true);">
 	<fieldset class="entryFieldset"><legend>Edit Workout: {{workout.name}}</legend>
 	<p>Required fields are followed by <strong><abbr title="required">*</abbr></strong>.</p>
 	<input type="hidden" name="id" value="{{workout.id}}">

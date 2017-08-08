@@ -4,14 +4,19 @@
  * Date: Aug 2, 2017
  */
 
+if (!String.prototype.trim) {
+  String.prototype.trim = function () {
+    return this.replace(/^[\s\uFEFF\xA0]+|[\s\uFEFF\xA0]+$/g, '');
+  };
+}
+
 function postWorkout() {
 	document.getElementById('workoutBtn').addEventListener('click', function(event) {
-		
 
 		var workout = {};
 		workout.name = document.getElementById('workoutName').value;
 		
-		// we want to proceed only if there is a name
+		// we want to proceed only if all the input is correct.
 		if(!inputValidation(true)) {
 			return;
 		}
@@ -94,7 +99,6 @@ function postWorkout() {
 				delBtn.setAttribute("type", "button");
 				delBtn.setAttribute("onclick", "deleteWorkout("+rowJSON.id+")");
 				delBtn.setAttribute("value", "Delete");
-
 				
 				var btnTd = document.createElement("td");
 				btnTd.setAttribute("class", "editCell");
@@ -169,8 +173,6 @@ function resetTable() {
 		req.open('GET', '/resetTable', true);
 		req.addEventListener('load', function() {
 			if (req.status >= 200 && req.status < 400) {
-				//console.log('Client: table reset!');
-				//console.log('Data: ['+req.responseText+']');
 				var tableBody = document.getElementById("tableBody");
 				tableBody.innerHTML = "";
 				var tr = document.createElement("tr");
@@ -187,105 +189,63 @@ function resetTable() {
 	});
 }
 
-function submitValidation(workoutName) {
-	var name = "";
-	// we need to account for validating from the main page, which uses a custom button listener
-	// and submitting from the edit page, which uses the default form submit.
-	if(workoutName.name) {
-		name += workoutName.name.value;
+/**
+ * Checks name, reps, and weight input for valid values.
+ * If the user enters invalid values, the input box background turns red.
+ * The background reverts to white once valid input is entered.
+ * 
+ * If the user attempts to submit with invalid values, an alert pops up displaying an error message.
+ */
+function inputValidation(isSubmit) {
+
+	var isValid = true;
+	
+	var prefix = "";
+	var pageName = "";
+	
+	if(document.getElementById("workoutName")){
+		prefix += "workout";
 	} else {
-		name = workoutName;
+		prefix += "edit";
 	}
-	if (name.trim() === "") {
-		alert("Workout Name cannot be empty!");
+	
+	if (!validateField(prefix+"Name", isSubmit, "Workout Name cannot be empty!") && isSubmit) {
 		return false;
 	}
+
+	if (!validateField(prefix+"Reps", isSubmit, "Workout Reps must have a positive number!") && isSubmit) {
+		return false;
+	}
+
+	if (!validateField(prefix+"Weight", isSubmit, "Workout Weight must have a positive number!") && isSubmit) {
+		return false;
+	}
+
 	return true;
 }
 
-function inputValidation(isSubmit) {
-	var inputField = document.getElementById('workoutName');
-	var message = "";
-	var isValid = true;
-	if(inputField) {
-		if(inputField.value.trim() == ""){
-			getErrorDisplay(inputField, true, isSubmit, "Workout Name cannot be empty!");
-			isValid = false;
-			if (isSubmit) {
-				return false;
-			}
-		} else {
-			getErrorDisplay(inputField, false, isSubmit, message);
-		}
-		
-		var repField = document.getElementById("workoutReps");
-		if (repField.value < 0 || repField.value === '') {
-			getErrorDisplay(repField, true, isSubmit, "Workout Reps must be positive!");
-			isValid = false;
-			if (isSubmit) {
-				return false;
-			}
-		} else {
-			getErrorDisplay(repField, false, isSubmit, message);
-		}
-		
-		var weightField = document.getElementById("workoutWeight");
-		if (weightField.value < 0 || weightField.value === '') {
-			getErrorDisplay(weightField, true, isSubmit, "Workout Weight must be positive!");
-			isValid = false;
-			if (isSubmit) {
-				return false;
-			}
-		} else {
-			getErrorDisplay(weightField, false, isSubmit, message);
-		}
-		
+function validateField(fieldId, isSubmit, message){
+	var field = document.getElementById(fieldId);
+	var valid = true;
+	if (field.value < 0 || field.value.trim() === '') {
+		valid = updateDisplay(field, true, isSubmit, message);
 	} else {
-		inputField = document.getElementById('editName');
-		if(inputField.value.trim() == ""){
-			getErrorDisplay(inputField, true, isSubmit, "Workout Name cannot be empty!");
-			isValid = false;
-			if (isSubmit) {
-				return false;
-			}
-		} else {
-			getErrorDisplay(inputField, false, isSubmit, message);
-		}
-		var repField = document.getElementById("editReps");
-		if (repField.value < 0 || repField.value === '') {
-			getErrorDisplay(repField, true, isSubmit, "Workout Reps must be positive!");
-			isValid = false;
-		} else {
-			getErrorDisplay(repField, false, isSubmit, message);
-		}
-		
-		var weightField = document.getElementById("editWeight");
-		if (weightField.value < 0 || weightField.value === '') {
-			getErrorDisplay(weightField, true, isSubmit, "Workout Weight must be positive!");
-			isValid = false;
-			if (isSubmit) {
-				return false;
-			}
-		} else {
-			getErrorDisplay(weightField, false, isSubmit, message);
-		}
+		valid = updateDisplay(field, false, isSubmit, message);
 	}
-
-	return isValid;
+	return valid;
 }
 
-function getErrorDisplay(nameField, isError, isSubmit, message) {
-
+function updateDisplay(field, isError, isSubmit, message) {
 	if(isError && isSubmit) {
 		alert(message);
 		return false;
 	} else {
 		if(isError){
-			nameField.style.backgroundColor = "red";	
+			field.style.backgroundColor = "red";	
 			return false;
 		} else {
-			nameField.style.border = "1px solid DarkGray";
-			nameField.style.backgroundColor = "transparent";
+			field.style.border = "1px solid DarkGray";
+			field.style.backgroundColor = "transparent";
 		}
 	}
 	return true;
