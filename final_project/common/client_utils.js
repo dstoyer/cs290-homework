@@ -4,15 +4,19 @@
  * Date: Aug 2, 2017
  */
 
+if (!String.prototype.trim) {
+  String.prototype.trim = function () {
+    return this.replace(/^[\s\uFEFF\xA0]+|[\s\uFEFF\xA0]+$/g, '');
+  };
+}
+
 function postWorkout() {
 	document.getElementById('workoutBtn').addEventListener('click', function(event) {
-		
 
-		//console.log("Workout button clicked.");
 		var workout = {};
 		workout.name = document.getElementById('workoutName').value;
 		
-		// we want to proceed only if there is a name
+		// we want to proceed only if all the input is correct.
 		if(!inputValidation(true)) {
 			return;
 		}
@@ -34,15 +38,11 @@ function postWorkout() {
 		document.getElementById('kg').checked = false;
 		document.getElementById('lbs').checked = true;
 		
-		var url = 'http://localhost:3500/insertWorkout';
-		
 		var req = new XMLHttpRequest();
 		req.open('POST', '/insertWorkout', true);
 		req.setRequestHeader("Content-type", "application/json");
 		req.addEventListener('load', function() {
 			if (req.status >= 200 && req.status < 400) {
-				//console.log('Client: workout POST response received!');
-				//console.log('Data: ['+req.responseText+']');
 				var rowJSON = JSON.parse(req.responseText);
 				var tableBody = document.getElementById("tableBody");
 				if (document.getElementById("noDataRow")) {
@@ -56,16 +56,21 @@ function postWorkout() {
 					if ("id" !== data) {
 						var td = document.createElement("td");
 						var tdContent = "";
+
 						if ("date" === data) {
 							// we only want the year-month-day, not the time and time zone offset.
 							tdContent += rowJSON[data].slice(0,10);
-						} else if (data === "units"){
+						} else if ("units" === data){
 							if (rowJSON[data]) {
 								tdContent += "lbs";
 							} else {
 								tdContent += "kg";
 							}
 						} else {
+							if ("name" === data) {
+								td.setAttribute("class", "nameCell");
+								td.setAttribute("title", rowJSON[data]);
+							}
 							tdContent += rowJSON[data];
 						}
 						td.appendChild(document.createTextNode(tdContent));
@@ -94,9 +99,9 @@ function postWorkout() {
 				delBtn.setAttribute("type", "button");
 				delBtn.setAttribute("onclick", "deleteWorkout("+rowJSON.id+")");
 				delBtn.setAttribute("value", "Delete");
-
 				
 				var btnTd = document.createElement("td");
+				btnTd.setAttribute("class", "editCell");
 				btnTd.appendChild(editForm);
 				btnTd.appendChild(document.createTextNode(" "));
 				btnTd.appendChild(delBtn);
@@ -104,7 +109,7 @@ function postWorkout() {
 				tableBody.appendChild(row);
 			}
 		});
-		//console.log("Client: Sending workout: ["+JSON.stringify(workout)+"]")
+
 		req.send(JSON.stringify(workout));
 		event.preventDefault();
 	});
@@ -112,7 +117,6 @@ function postWorkout() {
 
 function deleteWorkout(workoutId) {
 	
-	//console.log("Delete button clicked.");
 	var req = new XMLHttpRequest();
 	req.open('POST', '/deleteWorkout', true);
 	req.setRequestHeader("Content-type", "application/json");
@@ -120,11 +124,7 @@ function deleteWorkout(workoutId) {
 		if (req.status >= 200 && req.status < 400) {
 			var resJSON = JSON.parse(req.responseText);
 			var tableBody = document.getElementById("tableBody");
-			//console.log("Removing workout.");
 			tableBody.removeChild(document.getElementById(resJSON.id));
-			//console.log("deleteWorkout: tableBody after delete: ["+tableBody.textContent.trim()+"]");
-			//console.log("tableBody has children: "+tableBody.hasChildNodes());
-			//console.log("tableBody children length: "+tableBody.children.length);
 			if (tableBody.children.length === 0 ){
 				var noDataRow = document.createElement('tr');
 				noDataRow.setAttribute('id', 'noDataRow');
@@ -143,17 +143,14 @@ function deleteWorkout(workoutId) {
 }
 
 function editWorkout(workoutId) {
-	//console.log("Edit button clicked.");
 	var req = new XMLHttpRequest();
 	req.open('POST', '/editWorkout', true);
 	req.setRequestHeader("Content-type", "application/json");
 	req.addEventListener('load', function() {
 		if (req.status >= 200 && req.status < 400) {
 			// Success, nothing to do.
-			//console.log('Client: editWorkout response: '+req.responseText)
-//			document.body.innerHTML = req.responseText;
 		} else {
-			//console.log("Client: editWorkout() Error status code: "+req.status);
+			console.log("Client: editWorkout() Error status code: "+req.status);
 		}
 	});
 	var payload = {};
@@ -161,27 +158,6 @@ function editWorkout(workoutId) {
 	req.send(JSON.stringify(payload));
 	event.preventDefault();
 }
-
-//function updateWorkout(form) {
-//	//console.log("Update button clicked.");
-//	var req = new XMLHttpRequest();
-//	req.open('POST', '/updateWorkout', true);
-//	req.setRequestHeader("Content-type", "application/json");
-//	req.addEventListener('load', function() {
-//		if (req.status >= 200 && req.status < 400) {
-//			// Success, nothing to do.
-//			//console.log('Client: updateWorkout response: '+req.responseText)
-//			//console.log('Client: updateWorkout url: '+req.url)
-////			document.body.innerHTML = req.responseText;
-//		} else {
-//			//console.log("Client: editWorkout() Error status code: "+req.status);
-//		}
-//	});
-//	var payload = {};
-//	payload.id = workoutId;
-//	req.send(JSON.stringify(payload));
-//	event.preventDefault();
-//}
 
 function getUnitName(bool) {
 	if (bool){
@@ -197,8 +173,6 @@ function resetTable() {
 		req.open('GET', '/resetTable', true);
 		req.addEventListener('load', function() {
 			if (req.status >= 200 && req.status < 400) {
-				//console.log('Client: table reset!');
-				//console.log('Data: ['+req.responseText+']');
 				var tableBody = document.getElementById("tableBody");
 				tableBody.innerHTML = "";
 				var tr = document.createElement("tr");
@@ -215,59 +189,63 @@ function resetTable() {
 	});
 }
 
-function submitValidation(workoutName) {
-	var name = "";
-	//console.log("Triggered submitValidation()");
-	// we need to account for validating from the main page, which uses a custom button listener
-	// and submitting from the edit page, which uses the default form submit.
-	if(workoutName.name) {
-		//console.log("validating edit page form");
-		name += workoutName.name.value;
-	} else {
-		//console.log("validating home page form");
-		name = workoutName;
-	}
-	if (name.trim() === "") {
-		alert("Workout Name cannot be empty!");
-		return false;
-	}
-	return true;
-}
-
+/**
+ * Checks name, reps, and weight input for valid values.
+ * If the user enters invalid values, the input box background turns red.
+ * The background reverts to white once valid input is entered.
+ * 
+ * If the user attempts to submit with invalid values, an alert pops up displaying an error message.
+ */
 function inputValidation(isSubmit) {
-	var inputField = document.getElementById('workoutName');
-	if(!inputField) { // if the inputField doesn't exist then we are on the edit page.
-		inputField = document.getElementById('editworkoutName');
-	}
-	//console.log("inputField value: "+inputField.value);
-	//console.log(inputField.value);
-	if(inputField.value.trim() == ""){
-			getEmptyNameErrorMsg(inputField, true, isSubmit);
-//			inputField.style.borderColor = "red";
-//			inputField.style.backgroundColor = "red";	
-		return false;
+
+	var isValid = true;
+	
+	var prefix = "";
+	var pageName = "";
+	
+	if(document.getElementById("workoutName")){
+		prefix += "workout";
 	} else {
-		getEmptyNameErrorMsg(inputField, false, isSubmit);
-//		inputField.style.borderColor = "black";
-//		inputField.style.backgroundColor = "white";
+		prefix += "edit";
 	}
+	
+	if (!validateField(prefix+"Name", isSubmit, "Workout Name cannot be empty!") && isSubmit) {
+		return false;
+	}
+
+	if (!validateField(prefix+"Reps", isSubmit, "Workout Reps must have a positive number!") && isSubmit) {
+		return false;
+	}
+
+	if (!validateField(prefix+"Weight", isSubmit, "Workout Weight must have a positive number!") && isSubmit) {
+		return false;
+	}
+
 	return true;
 }
 
-function getEmptyNameErrorMsg(nameField, isEmpty, isSubmit) {
+function validateField(fieldId, isSubmit, message){
+	var field = document.getElementById(fieldId);
+	var valid = true;
+	if (field.value < 0 || field.value.trim() === '') {
+		valid = updateDisplay(field, true, isSubmit, message);
+	} else {
+		valid = updateDisplay(field, false, isSubmit, message);
+	}
+	return valid;
+}
 
-	if(isEmpty && isSubmit) {
-		alert("Workout Name cannot be empty!");
+function updateDisplay(field, isError, isSubmit, message) {
+	if(isError && isSubmit) {
+		alert(message);
 		return false;
 	} else {
-		if(isEmpty){
-//			nameField.style.borderColor = "red";
-			nameField.style.backgroundColor = "red";	
+		if(isError){
+			field.style.backgroundColor = "red";	
 			return false;
 		} else {
-//			nameField.style.borderColor = "initial";
-			nameField.style.border = "1px solid DarkGray";
-			nameField.style.backgroundColor = "transparent";
+			field.style.border = "1px solid DarkGray";
+			field.style.backgroundColor = "transparent";
 		}
 	}
 	return true;
