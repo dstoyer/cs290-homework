@@ -211,6 +211,9 @@ function inputValidation(isSubmit) {
 		if(inputField.value.trim() == ""){
 			getErrorDisplay(inputField, true, isSubmit, "Workout Name cannot be empty!");
 			isValid = false;
+			if (isSubmit) {
+				return false;
+			}
 		} else {
 			getErrorDisplay(inputField, false, isSubmit, message);
 		}
@@ -219,6 +222,9 @@ function inputValidation(isSubmit) {
 		if (repField.value < 0 || repField.value === '') {
 			getErrorDisplay(repField, true, isSubmit, "Workout Reps must be positive!");
 			isValid = false;
+			if (isSubmit) {
+				return false;
+			}
 		} else {
 			getErrorDisplay(repField, false, isSubmit, message);
 		}
@@ -227,6 +233,9 @@ function inputValidation(isSubmit) {
 		if (weightField.value < 0 || weightField.value === '') {
 			getErrorDisplay(weightField, true, isSubmit, "Workout Weight must be positive!");
 			isValid = false;
+			if (isSubmit) {
+				return false;
+			}
 		} else {
 			getErrorDisplay(weightField, false, isSubmit, message);
 		}
@@ -236,6 +245,9 @@ function inputValidation(isSubmit) {
 		if(inputField.value.trim() == ""){
 			getErrorDisplay(inputField, true, isSubmit, "Workout Name cannot be empty!");
 			isValid = false;
+			if (isSubmit) {
+				return false;
+			}
 		} else {
 			getErrorDisplay(inputField, false, isSubmit, message);
 		}
@@ -251,6 +263,9 @@ function inputValidation(isSubmit) {
 		if (weightField.value < 0 || weightField.value === '') {
 			getErrorDisplay(weightField, true, isSubmit, "Workout Weight must be positive!");
 			isValid = false;
+			if (isSubmit) {
+				return false;
+			}
 		} else {
 			getErrorDisplay(weightField, false, isSubmit, message);
 		}
