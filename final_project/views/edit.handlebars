@@ -1,6 +1,6 @@
 <p>Welcome to the edit page!</p>
 
-<form action="/" class="editForm" method="POST" onsubmit="return inputValidation(true)">
+<form action="/" class="editForm" method="POST" onsubmit="inputValidation(true); return false">
 	<fieldset class="entryFieldset"><legend>Edit Workout: {{workout.name}}</legend>
 	<p>Required fields are followed by <strong><abbr title="required">*</abbr></strong>.</p>
 	<input type="hidden" name="id" value="{{workout.id}}">
@@ -10,11 +10,11 @@
 	</p>
 	<p>
 		<label class="entryLabel" for="reps"><span>Reps:</span></label>
-		<input class="inputBox" id="editReps" type="number" onClick="this.select()" onkeyup="inputValidation(false)" name="reps" min="0" value="{{workout.reps}}">
+		<input class="inputBox" id="editReps" type="number" onClick="this.select(); inputValidation(false)" onkeyup="inputValidation(false)" name="reps" min="0" value="{{workout.reps}}">
 	</p>
 	<p>
 		<label class="entryLabel" for="Weight"><span>Weight:</span></label>
-		<input class="inputBox" id="editWeight" type="number" onClick="this.select()" onkeyup="inputValidation(false)" name="weight" min="0" value="{{workout.weight}}">
+		<input class="inputBox" id="editWeight" type="number" onClick="this.select(); inputValidation(false)" onkeyup="inputValidation(false)" name="weight" min="0" value="{{workout.weight}}">
 	</p>
 	<p>
 		<label class="entryLabel" for="date"><span>Date:</span></label>
