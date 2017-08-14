@@ -152,6 +152,7 @@ expressApp.post('/deleteWorkout', function(req, res) {
 	  
 	  mysql.pool.query("DELETE FROM workouts WHERE id = ?",[req.body.id], function(err, result){
 	    if(err){
+	    	console.log("error deleteing: "+err);
 	    	res.send(err);
 	      return;
 	    }

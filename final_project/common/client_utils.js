@@ -10,6 +10,13 @@ if (!String.prototype.trim) {
   };
 }
 
+function preventBrowserHistoryNavigation(){
+	history.pushState(null, null, document.url);
+	window.addEventListener('popstate', function () {
+	    history.pushState(null, null, document.url);
+	});
+}
+
 function postWorkout() {
 	document.getElementById('workoutBtn').addEventListener('click', function(event) {
 
@@ -61,11 +68,7 @@ function postWorkout() {
 							// we only want the year-month-day, not the time and time zone offset.
 							tdContent += rowJSON[data].slice(0,10);
 						} else if ("units" === data){
-							if (rowJSON[data]) {
-								tdContent += "lbs";
-							} else {
-								tdContent += "kg";
-							}
+							tdContent += rowJSON[data] ? "lbs" : "kg";
 						} else {
 							if ("name" === data) {
 								td.setAttribute("class", "nameCell");
@@ -149,6 +152,7 @@ function editWorkout(workoutId) {
 	req.addEventListener('load', function() {
 		if (req.status >= 200 && req.status < 400) {
 			// Success, nothing to do.
+			console.log("Edit successful!");
 		} else {
 			console.log("Client: editWorkout() Error status code: "+req.status);
 		}
